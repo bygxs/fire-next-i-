@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { auth } from "../lib/firebase";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { deleteDoc } from "firebase/firestore/lite";
 
 export default function AdminPage() {
   const [users, setUsers] = useState<any[]>([]);
@@ -73,6 +74,22 @@ export default function AdminPage() {
               <p className="text-gray-700 dark:text-gray-300">
                 <strong>Role:</strong> {user.role || "user"}
               </p>
+
+{/* delete button to delete a user */}
+<button
+  onClick={async () => {
+    if (confirm("Delete this user?")) {
+      await deleteDoc(doc(db, "users", user.id));
+      setUsers(users.filter((u) => u.id !== user.id));
+    }
+  }}
+  className="mt-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+>
+  Delete
+</button>
+
+
+
             </li>
           ))}
         </ul>

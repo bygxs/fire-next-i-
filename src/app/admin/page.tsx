@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "../lib/firebase";
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { deleteDoc } from "firebase/firestore/lite";
 
@@ -12,6 +12,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
+  const [newEmail, setNewEmail] = useState("")
 
   useEffect(() => {
     const checkAdminAndFetchUsers = async () => {
@@ -57,11 +58,16 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Admin Panel - All Users</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">
+        Admin Panel - All Users
+      </h1>
       {users.length > 0 ? (
         <ul className="space-y-4">
           {users.map((user) => (
-            <li key={user.id} className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+            <li
+              key={user.id}
+              className="bg-white dark:bg-gray-800 p-4 rounded shadow"
+            >
               <p className="text-gray-700 dark:text-gray-300">
                 <strong>ID:</strong> {user.id}
               </p>
@@ -75,21 +81,64 @@ export default function AdminPage() {
                 <strong>Role:</strong> {user.role || "user"}
               </p>
 
-{/* delete button to delete a user */}
-<button
-  onClick={async () => {
-    if (confirm("Delete this user?")) {
-      await deleteDoc(doc(db, "users", user.id));
-      setUsers(users.filter((u) => u.id !== user.id));
-    }
-  }}
-  className="mt-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
->
-  Delete
-</button>
+{/* Create User
+Add a simple form above the list: */}
 
+<div className="mb-6">
+  <input
+    type="email"
+    placeholder="New user email"
+    value={newEmail}
+    onChange={(e) => setNewEmail(e.target.value)}
+    className="p-2 border rounded dark:bg-gray-700 dark:text-gray-200"
+  />
+  <button
+    onClick={async () => {
+      const id = Math.random().toString(36).slice(2); // Dummy ID
+      await setDoc(doc(db, "users", id), { email: newEmail, role: "user" });
+      setUsers([...users, { id, email: newEmail, role: "user" }]);
+      setNewEmail("");
+    }}
+    className="ml-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+  >
+    Add User
+  </button>
+</div>
 
+              {/* Update Role
+Add a button to toggle roles: */}
 
+              <button
+                onClick={async () => {
+                  const newRole = user.role === "admin" ? "user" : "admin";
+                  await setDoc(
+                    doc(db, "users", user.id),
+                    { role: newRole },
+                    { merge: true }
+                  );
+                  setUsers(
+                    users.map((u) =>
+                      u.id === user.id ? { ...u, role: newRole } : u
+                    )
+                  );
+                }}
+                className="m-4 px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                Toggle Role
+              </button>
+
+              {/* delete button to delete a user */}
+              <button
+                onClick={async () => {
+                  if (confirm("Delete this user?")) {
+                    await deleteDoc(doc(db, "users", user.id));
+                    setUsers(users.filter((u) => u.id !== user.id));
+                  }
+                }}
+                className="mt-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>

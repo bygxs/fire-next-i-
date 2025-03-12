@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    
     "version-and-tag": "npm version patch && git push --tags",
     "version-push-and-tag": "npm version patch && git push && git push --tags",
     "version-and-tag-minor": "npm version minor &&  git push --tags",
@@ -21,7 +20,8 @@
     "next": "15.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-hot-toast": "^2.5.2"
+    "react-hot-toast": "^2.5.2",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

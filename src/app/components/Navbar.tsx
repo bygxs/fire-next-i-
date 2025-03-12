@@ -49,14 +49,14 @@ export default function Navbar() {
               </span>
             </Link>
 
-          {/*   <ThemeToggle /> */}
+           <ThemeToggle /> 
           </div>
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-4">
-        {/*     <ThemeToggle /> */}
+            <ThemeToggle /> 
             <NavLinks isSignedIn={isSignedIn} />
-            {/*        <ThemeToggle /> */}
+               <ThemeToggle /> 
             {isSignedIn && (
               <button
                 onClick={handleSignOut}

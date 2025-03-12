@@ -1,10 +1,12 @@
+//src/app/admin/page.tsx
+
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../lib/firebase";
+import { auth } from "../../lib/firebase";
 import { collection, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { db } from "../../lib/firebase";
 import { deleteDoc } from "firebase/firestore/lite";
 
 export default function AdminPage() {
@@ -12,7 +14,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
-  const [newEmail, setNewEmail] = useState("")
+  const [newEmail, setNewEmail] = useState("");
 
   useEffect(() => {
     const checkAdminAndFetchUsers = async () => {
@@ -81,29 +83,32 @@ export default function AdminPage() {
                 <strong>Role:</strong> {user.role || "user"}
               </p>
 
-{/* Create User
+              {/* Create User
 Add a simple form above the list: */}
 
-<div className="mb-6">
-  <input
-    type="email"
-    placeholder="New user email"
-    value={newEmail}
-    onChange={(e) => setNewEmail(e.target.value)}
-    className="p-2 border rounded dark:bg-gray-700 dark:text-gray-200"
-  />
-  <button
-    onClick={async () => {
-      const id = Math.random().toString(36).slice(2); // Dummy ID
-      await setDoc(doc(db, "users", id), { email: newEmail, role: "user" });
-      setUsers([...users, { id, email: newEmail, role: "user" }]);
-      setNewEmail("");
-    }}
-    className="ml-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-  >
-    Add User
-  </button>
-</div>
+              <div className="mb-6">
+                <input
+                  type="email"
+                  placeholder="New user email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  className="p-2 border rounded dark:bg-gray-700 dark:text-gray-200"
+                />
+                <button
+                  onClick={async () => {
+                    const id = Math.random().toString(36).slice(2); // Dummy ID
+                    await setDoc(doc(db, "users", id), {
+                      email: newEmail,
+                      role: "user",
+                    });
+                    setUsers([...users, { id, email: newEmail, role: "user" }]);
+                    setNewEmail("");
+                  }}
+                  className="ml-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                >
+                  Add User
+                </button>
+              </div>
 
               {/* Update Role
 Add a button to toggle roles: */}

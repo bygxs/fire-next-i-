@@ -26,6 +26,7 @@ export default function Home() {
         >
           Sign Up
         </a>
+        
       </div>
     </div>
   );

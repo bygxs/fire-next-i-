@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import packageJson from "../../package.json"; // Import package.json
 
 import { Toaster } from "react-hot-toast";
+import ThemeToggle from "./components/ThemeToggle";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,11 +33,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <Navbar />
-        <main className="flex-grow">{children}
-        <Toaster />
-        </main>
+        <ThemeProvider>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+
+          <Toaster />
+        </ThemeProvider>
         {/* Footer with version */}
+
         <footer className="text-center py-4 text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
           Version: {packageJson.version}
         </footer>

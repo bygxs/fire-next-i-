@@ -48,12 +48,15 @@ export default function Navbar() {
                 BYG:XS
               </span>
             </Link>
+
+          {/*   <ThemeToggle /> */}
           </div>
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-4">
+        {/*     <ThemeToggle /> */}
             <NavLinks isSignedIn={isSignedIn} />
-            <ThemeToggle />
+            {/*        <ThemeToggle /> */}
             {isSignedIn && (
               <button
                 onClick={handleSignOut}

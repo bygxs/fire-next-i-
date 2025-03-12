@@ -30,11 +30,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+  /*   <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
-      >
-        <ThemeProvider>
+      > */
+    <html lang="en" suppressHydrationWarning>
+      <body className="bg-white dark:bg-[#191919] text-[#37352f] dark:text-[#ffffffcf]">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <Navbar />
           <main className="flex-grow">{children}</main>
 

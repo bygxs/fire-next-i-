@@ -1,5 +1,25 @@
 // app/components/ThemeProvider.tsx
+
+
 "use client";
+
+import {
+  ThemeProvider as NextThemesProvider,
+  ThemeProviderProps,
+} from "next-themes";
+
+export default function ThemeProvider({
+  children,
+  ...props
+}: ThemeProviderProps) {
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+}
+
+
+
+
+
+/* "use client";
 
 import { useEffect, useState } from "react";
 import { useThemeStore } from "../store/useThemeStore";
@@ -19,4 +39,4 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
   if (!mounted) return null;
 
   return <>{children}</>;
-}
+} */

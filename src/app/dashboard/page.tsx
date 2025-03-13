@@ -83,6 +83,12 @@ export default function Dashboard() {
           Edit Profile
         </Link>
 
+        {profile?.role === "admin" && (
+  <Link href="/admin/photo-upload" className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+    Upload Photo
+  </Link>
+)}
+
         {/* you’ll see the message if you’re admin. Non-admins won’t. */}
 
         {profile?.role === "admin" && (

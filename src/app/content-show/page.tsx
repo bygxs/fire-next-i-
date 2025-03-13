@@ -1,3 +1,5 @@
+
+
 "use client"; // Tells Next.js this is a Client Component—runs in the browser, not server.
 
 import { useEffect, useState } from "react"; // Hooks for side effects and state management.
@@ -120,7 +122,7 @@ export default function ContentPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-6 flex justify-between"> {/* // Pagination controls. */}
+          <div className="mt-6 flex justify-between"> {/* // Pagination controls. 
             <button
               onClick={handlePrev}
               disabled={page === 1} // Grayed out on first page.
@@ -140,7 +142,7 @@ export default function ContentPage() {
             </button>
           </div>
         </>
-      ) : ( // No content case.
+      ) : ( /* // No content case. 
         <p className="text-gray-600 dark:text-gray-400">No content yet.</p>
       )}
     </div>

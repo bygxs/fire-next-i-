@@ -1,4 +1,5 @@
 // src/page.tsx
+import Link from "next/link";
 import Navbar from "../app/components/Navbar";
 import ThemeToggle from "./components/ThemeToggle";
 
@@ -26,7 +27,12 @@ export default function Home() {
         >
           Sign Up
         </a>
-        
+        <Link
+          href="/art-show"
+          className="inline-block px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mt-2"
+        >
+          View Art
+        </Link>
       </div>
     </div>
   );

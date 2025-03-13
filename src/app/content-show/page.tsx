@@ -1,14 +1,12 @@
-
-
 "use client"; // Tells Next.js this is a Client Component—runs in the browser, not server.
 
 import { useEffect, useState } from "react"; // Hooks for side effects and state management.
 import {
   collection, // Creates a reference to a Firestore collection (e.g., "content").
-  getDocs,    // Fetches all docs from a query or collection.
-  query,      // Builds a Firestore query with conditions (like sorting).
-  orderBy,    // Sorts query results (e.g., by "createdAt").
-  limit,      // Caps how many docs you fetch (e.g., 5 per page).
+  getDocs, // Fetches all docs from a query or collection.
+  query, // Builds a Firestore query with conditions (like sorting).
+  orderBy, // Sorts query results (e.g., by "createdAt").
+  limit, // Caps how many docs you fetch (e.g., 5 per page).
   startAfter, // Starts fetching after a specific doc (for "Next" pagination).
 } from "firebase/firestore"; // Firestore tools for data fetching.
 import { db } from "../lib/firebase"; // Your Firestore instance from firebase.ts.
@@ -20,8 +18,10 @@ export default function ContentPage() {
   const [page, setPage] = useState(1); // Current page number (starts at 1).
   const itemsPerPage = 5; // Constant: how many items per page.
 
-  useEffect(() => { // Runs once on mount to fetch initial content.
-    const fetchContent = async () => { // Async function to handle Firestore fetch.
+  useEffect(() => {
+    // Runs once on mount to fetch initial content.
+    const fetchContent = async () => {
+      // Async function to handle Firestore fetch.
       try {
         // Critical: Builds a query to get 5 newest items, sorted by createdAt descending.
         const q = query(
@@ -81,10 +81,12 @@ export default function ContentPage() {
       );
       const contentSnapshot = await getDocs(q);
       // Slices the last 5 items from the fetched set.
-      const contentList = contentSnapshot.docs.slice(-itemsPerPage).map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const contentList = contentSnapshot.docs
+        .slice(-itemsPerPage)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
       setContentItems(contentList);
       setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
       setPage(page - 1); // Drop page number.
@@ -93,11 +95,13 @@ export default function ContentPage() {
     }
   };
 
-  if (loading) { // Show loading state while fetching.
+  if (loading) {
+    // Show loading state while fetching.
     return <div className="text-gray-600 dark:text-gray-400">Loading...</div>;
   }
 
-  return ( // Main UI render.
+  return (
+    // Main UI render.
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
       <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">
         Content
@@ -105,24 +109,30 @@ export default function ContentPage() {
       {contentItems.length > 0 ? ( // If there’s content, show it.
         <>
           <ul className="space-y-6">
-            {contentItems.map((item) => ( // Loop through items.
-              <li
-                key={item.id}
-                className="bg-white dark:bg-gray-800 p-4 rounded shadow"
-              >
-                <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-                  {item.title}
-                </h2>
-                <p className="text-gray-700 dark:text-gray-300 mt-2">
-                  {item.body}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
-                  Posted on: {new Date(item.createdAt).toLocaleDateString()}
-                </p>
-              </li>
-            ))}
+            {contentItems.map(
+              (
+                item // Loop through items.
+              ) => (
+                <li
+                  key={item.id}
+                  className="bg-white dark:bg-gray-800 p-4 rounded shadow"
+                >
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+                    {item.title}
+                  </h2>
+                  <p className="text-gray-700 dark:text-gray-300 mt-2">
+                    {item.body}
+                  </p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
+                    Posted on: {new Date(item.createdAt).toLocaleDateString()}
+                  </p>
+                </li>
+              )
+            )}
           </ul>
-          <div className="mt-6 flex justify-between"> {/* // Pagination controls. 
+          <div className="mt-6 flex justify-between">
+            {" "}
+            // Pagination controls.
             <button
               onClick={handlePrev}
               disabled={page === 1} // Grayed out on first page.
@@ -142,7 +152,8 @@ export default function ContentPage() {
             </button>
           </div>
         </>
-      ) : ( /* // No content case. 
+      ) : (
+        // No content case.
         <p className="text-gray-600 dark:text-gray-400">No content yet.</p>
       )}
     </div>

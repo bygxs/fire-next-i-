@@ -84,10 +84,19 @@ export default function Dashboard() {
         </Link>
 
         {profile?.role === "admin" && (
-  <Link href="/admin/photo-upload" className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-    Upload Photo
-  </Link>
-)}
+          <Link
+            href="/admin/art-upload"
+            className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Upload Art
+          </Link>
+        )}
+        <Link
+          href="/art-show"
+          className="inline-block px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mt-2"
+        >
+          View Art
+        </Link>
 
         {/* you’ll see the message if you’re admin. Non-admins won’t. */}
 

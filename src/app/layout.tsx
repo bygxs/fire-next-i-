@@ -30,7 +30,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-  
     <html lang="en" suppressHydrationWarning>
       <body className="bg-white dark:bg-[#191919] text-[#37352f] dark:text-[#ffffffcf]">
         <ThemeProvider
@@ -39,16 +38,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+             <div className="flex flex-col min-h-screen"> {/* Added flex and min-h-screen here */}
           <Navbar />
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow min-h-screen">{children}</main>
 
           <Toaster />
-        </ThemeProvider>
-      
 
-        <footer className="text-center py-4 text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
-          Version: {packageJson.version}
-        </footer>
+          <footer className=" text-center py-4 text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
+            Version: {packageJson.version} {/* sticky bottom-0 */}
+          </footer>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

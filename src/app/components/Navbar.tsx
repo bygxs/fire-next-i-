@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import packageJson from "../../../package.json";
 import { auth } from "../lib/firebase";
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
@@ -39,24 +40,26 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow-md">
+    <nav className=" sticky top-0 bg-white dark:bg-gray-800 shadow-md">
+      {/* sticky top-0  broke the dashboard */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0">
             <Link href="/">
-              <span className="text-xl font-bold text-gray-800 dark:text-gray-200 cursor-pointer">
-                BYG:XS
-              </span>
+              BYG:XS
+               <span className="ml-2 mr-2 text-xs italic text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
+                {packageJson.version}
+              </span> 
             </Link>
 
-           <ThemeToggle /> 
+            <ThemeToggle />
           </div>
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-4">
-            <ThemeToggle /> 
+            <ThemeToggle />
             <NavLinks isSignedIn={isSignedIn} />
-               <ThemeToggle /> 
+            <ThemeToggle />
             {isSignedIn && (
               <button
                 onClick={handleSignOut}

@@ -91,7 +91,7 @@ export default function Dashboard() {
               You’re an admin! Secret powers unlocked.
             </p>
             <Link
-              href="/admin"
+              href="/admin/users"
               className=" ml-64 mt-2 inline-block px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600"
             >
               Go to Admin Panel

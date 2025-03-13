@@ -86,13 +86,13 @@ export default function Dashboard() {
         {/* you’ll see the message if you’re admin. Non-admins won’t. */}
 
         {profile?.role === "admin" && (
-          <div>
-            <p className="text-green-500">
+          <div className="jusfty-center items-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg">
+            <p className="text-green-500 ml-11">
               You’re an admin! Secret powers unlocked.
             </p>
             <Link
               href="/admin"
-              className="mt-2 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className=" ml-64 mt-2 inline-block px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600"
             >
               Go to Admin Panel
             </Link>

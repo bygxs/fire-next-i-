@@ -131,6 +131,19 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
       <div className="w-full max-w-lg p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <div>
+          {" "}
+          {profile.profilePictureUrl && (
+            <div className="flex justify-center mb-4">
+              <img
+                src={profile.profilePictureUrl}
+                alt="Profile Picture"
+                className="w-24 h-24 rounded-full object-cover"
+              />
+            </div>
+          )}{" "}
+        </div>
+
         <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
           Welcome, {profile.name || "User"}!
         </h1>

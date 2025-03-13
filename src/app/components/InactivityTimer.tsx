@@ -14,7 +14,7 @@ export default function InactivityTimer({ onSignOut }: InactivityTimerProps) {
   const warningTimer = useRef<NodeJS.Timeout | null>(null);
   const toastId = useRef<string | null>(null); // Store the toast ID
 
-  const INACTIVITY_TIMEOUT = 10 * 60 * 1000; // 10 minutes
+  const INACTIVITY_TIMEOUT = 7 * 60 * 1000; // 10 minutes
   const WARNING_TIME = 1 * 60 * 1000; // 1 minute
 
   const startInactivityTimer = () => {

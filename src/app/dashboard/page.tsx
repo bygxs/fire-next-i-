@@ -65,6 +65,17 @@ export default function Dashboard() {
           Welcome to the Dashboard, {userEmail || "User"}!
         </h1>
 
+        {/* check Firestore’s content collection. */}
+
+        {profile?.role === "admin" && (
+          <Link
+            href="/admin/content"
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Manage Content
+          </Link>
+        )}
+
         <Link
           href="/profile"
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
@@ -73,19 +84,20 @@ export default function Dashboard() {
         </Link>
 
         {/* you’ll see the message if you’re admin. Non-admins won’t. */}
-      
-        {profile?.role === "admin" && (
-  <div>
-    <p className="text-green-500">You’re an admin! Secret powers unlocked.</p>
-    <Link
-      href="/admin"
-      className="mt-2 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-    >
-      Go to Admin Panel
-    </Link>
-  </div>
-)}
 
+        {profile?.role === "admin" && (
+          <div>
+            <p className="text-green-500">
+              You’re an admin! Secret powers unlocked.
+            </p>
+            <Link
+              href="/admin"
+              className="mt-2 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Go to Admin Panel
+            </Link>
+          </div>
+        )}
 
         {profile ? (
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg mt-6">

@@ -66,7 +66,7 @@ export default function Dashboard() {
         </h1>
 
         {/* check Firestore’s content collection. */}
-
+        <div>
         {profile?.role === "admin" && (
           <Link
             href="/admin/content-create"
@@ -78,7 +78,7 @@ export default function Dashboard() {
 
         <Link
           href="/profile"
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
+          className="m-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
         >
           Edit Profile
         </Link>
@@ -86,7 +86,7 @@ export default function Dashboard() {
         {profile?.role === "admin" && (
           <Link
             href="/admin/art-upload"
-            className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="m-2 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Upload Art
           </Link>
@@ -97,6 +97,8 @@ export default function Dashboard() {
         >
           View Art
         </Link>
+
+        </div>
 
         {/* you’ll see the message if you’re admin. Non-admins won’t. */}
 

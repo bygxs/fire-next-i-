@@ -3,6 +3,9 @@ import Link from "next/link";
 import Navbar from "../app/components/Navbar";
 import ThemeToggle from "./components/ThemeToggle";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+
 export default function Home() {
   return (
     // Main container with responsive padding
@@ -14,6 +17,10 @@ export default function Home() {
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
             Welcome to my simple Page
           </h1>
+          <div>
+      <h1>Hello, World!</h1>
+      <FontAwesomeIcon icon={faCoffee} />
+    </div>
           {/* Responsive paragraph */}
           <p className="text-gray-600 dark:text-gray-400 mb-8 text-center max-w-2xl">
             here you can see some writings and art 
@@ -52,12 +59,8 @@ export default function Home() {
           {/* Responsive text block */}
     {/* Fictional artist/developer paragraph */}
     <p className="text-gray-600 dark:text-gray-400 text-center sm:text-left max-w-2xl">
-            I’m Alex Rivera, a digital artist and web developer with a passion for blending 
-            creativity with code. By day, I craft immersive user interfaces with React and 
-            Tailwind, and by night, I paint vibrant digital landscapes that have been 
-            featured in galleries across the coast. My work bridges the gap between 
-            technical precision and artistic expression, delivering experiences that are 
-            both functional and beautiful.
+           let them have a look around, <br/> and find what they like.  <br/>   AND dislike, for that matter. <br/> done serving peopel, i am. <br/> done prsenting myself suitable, <br/> to hell with that. <br/> i be what i be hosts of many, <br/> and lord of hosts. <br/> - talking to myself, at the sart of day breadk. <br/>
+           i did what i did for Whatever reason,
           </p>
         </div>
       </div>

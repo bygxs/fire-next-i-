@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 
 import ThemeToggle from "./components/ThemeToggle";
 import ThemeProvider from "./components/ThemeProvider";
+import ClientLayoutWrapper from "./components/ClientLayoutWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,12 +46,15 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen">
             
             
-            <Navbar />
-            <main className="flex-grow min-h-screen">{children}</main>
+        {/*     <Navbar /> */}
+{/* 
+            <main className="flex-grow min-h-screen">{children}</main> */}
+ <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+            
             <Toaster />
-            <footer className=" text-center py-4 text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
+      {/*       <footer className=" text-center py-4 text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
               Version: {packageJson.version}
-            </footer>
+            </footer> */}
           </div>
         </ThemeProvider>
         <ServiceWorkerRegistration />

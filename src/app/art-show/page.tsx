@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -65,11 +63,11 @@ export default function ArtShowPage() {
     <div className="min-h-screen flex flex-col items-center justify-center relative">
       {/* Display current artwork */}
       {artworks.length > 0 && (
-        <div className="flex justify-center items-center flex-grow relative">
+        <div className="flex justify-center items-center flex-grow relative max-h-[80vh]">
           <img
             src={artworks[currentArtworkIndex]}
             alt={`Artwork ${currentArtworkIndex + 1}`}
-            className="max-w-full max-h-full object-contain"
+            className="max-w-full max-h-full object-fit"
           />
           {/* Navigation buttons */}
           <button

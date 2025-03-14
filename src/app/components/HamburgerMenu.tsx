@@ -10,7 +10,10 @@ interface HamburgerMenuProps {
   onSignOut: () => void;
 }
 
-export default function HamburgerMenu({ isSignedIn, onSignOut }: HamburgerMenuProps) {
+export default function HamburgerMenu({
+  isSignedIn,
+  onSignOut,
+}: HamburgerMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -41,14 +44,14 @@ export default function HamburgerMenu({ isSignedIn, onSignOut }: HamburgerMenuPr
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
+        {/* Theme Toggle */}
+        <div className="flex justify-center mt-4">
+          <ThemeToggle />
+        </div>
+
         <div className="p-4 flex flex-col space-y-4">
           {/* Nav Links */}
           <NavLinks isSignedIn={isSignedIn} onLinkClick={closeMenu} />
-
-          {/* Theme Toggle */}
-          <div className="flex justify-center">
-            <ThemeToggle />
-          </div>
 
           {/* Sign Out Button */}
           {isSignedIn && (

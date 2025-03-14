@@ -15,6 +15,12 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
         </span>
       </Link>
 
+      <Link href="/content-show" onClick={onLinkClick}>
+        <span className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 cursor-pointer px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+          content
+        </span>
+      </Link>
+
       {isSignedIn && (
         <>
           <Link href="/dashboard" onClick={onLinkClick}>

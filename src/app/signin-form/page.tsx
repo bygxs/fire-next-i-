@@ -34,7 +34,7 @@ export default function SignInForm() {
       // Redirect to dashboard after a short delay
       setTimeout(() => {
         router.push("/dashboard");
-      }, 2000); // 2 seconds delay
+      }, 1000); // 2 seconds delay
     } catch (error: any) {
       console.error("Sign-in error:", error);
 

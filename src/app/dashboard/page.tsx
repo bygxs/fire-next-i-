@@ -61,31 +61,58 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center pt-20">
-        <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+        <h3 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
           Welcome to the Dashboard, {userEmail || "User"}!
-        </h1>
+        </h3>
 
-        <Link
-          href="/profile"
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
-        >
-          Edit Profile
-        </Link>
+        {/* check Firestore’s content collection. */}
+        <div>
+          {profile?.role === "admin" && (
+            <Link
+              href="/admin/content-create"
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Manage Content
+            </Link>
+          )}
+
+          {profile?.role === "admin" && (
+            <Link
+              href="/admin/art-upload"
+              className="m-2 inline-block px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+            >
+              Upload Art
+            </Link>
+          )}
+          <Link
+            href="/art-show"
+            className="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-puple-700 transition-colors mt-2"
+          >
+            View Art
+          </Link>
+          <Link
+            href="/profile"
+            className="m-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
+          >
+            Edit Profile
+          </Link>
+        </div>
 
         {/* you’ll see the message if you’re admin. Non-admins won’t. */}
-      
-        {profile?.role === "admin" && (
-  <div>
-    <p className="text-green-500">You’re an admin! Secret powers unlocked.</p>
-    <Link
-      href="/admin"
-      className="mt-2 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-    >
-      Go to Admin Panel
-    </Link>
-  </div>
-)}
 
+        {profile?.role === "admin" && (
+          <div className="jusfty-center items-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg">
+            <p className="text-green-500 ml-11">
+              You’re an admin! Secret powers unlocked.
+            </p>
+            <Link
+              href="/admin/users"
+              className=" ml-64 mt-2 inline-block px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600"
+            >
+              Go to Admin Panel
+            </Link>
+          </div>
+        )}
 
         {profile ? (
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg mt-6">

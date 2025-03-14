@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { db } from "../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import RootLayout from "../layout";
 
 export default function ArtShowPage() {
   const [photoUrl, setPhotoUrl] = useState("");
@@ -18,13 +19,14 @@ export default function ArtShowPage() {
   }, []);
 
   return (
-    <div className={`min-h-screen ${darkMode ? "bg-gray-900" : "bg-white"} p-6 flex flex-col items-center`}>
+    <div className={`min-h-screen  p-6 flex flex-col items-center`}>
+    {/* <div className={`min-h-screen ${darkMode ? "bg-gray-900" : "bg-white"} p-6 flex flex-col items-center`}>
       <button
         onClick={() => setDarkMode(!darkMode)}
         className="mb-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
       >
         {darkMode ? "Light Mode" : "Dark Mode"}
-      </button>
+      </button> */}
       {photoUrl && (
         <img
           src={photoUrl}
@@ -35,3 +37,4 @@ export default function ArtShowPage() {
     </div>
   );
 }
+

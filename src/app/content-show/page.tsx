@@ -1,3 +1,170 @@
+// File: src/app/content-show/page.tsx
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  startAfter,
+} from "firebase/firestore";
+import { db } from "../lib/firebase";
+import Link from "next/link";
+
+export default function ContentPage() {
+  const [contentItems, setContentItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [lastDoc, setLastDoc] = useState(null);
+  const [page, setPage] = useState(1);
+  const [expanded, setExpanded] = useState({}); // Tracks expanded state per item
+  const itemsPerPage = 5;
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const q = query(
+          collection(db, "content"),
+          orderBy("createdAt", "desc"),
+          limit(itemsPerPage)
+        );
+        const contentSnapshot = await getDocs(q);
+        const contentList = contentSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setContentItems(contentList);
+        setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
+      } catch (error) {
+        console.error("Error fetching content:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchContent();
+  }, []);
+
+  const handleNext = async () => {
+    if (!lastDoc) return;
+    try {
+      const q = query(
+        collection(db, "content"),
+        orderBy("createdAt", "desc"),
+        startAfter(lastDoc),
+        limit(itemsPerPage)
+      );
+      const contentSnapshot = await getDocs(q);
+      const contentList = contentSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setContentItems(contentList);
+      setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
+      setPage(page + 1);
+      setExpanded({}); // Reset expanded state on page change
+    } catch (error) {
+      console.error("Error fetching next page:", error);
+    }
+  };
+
+  const handlePrev = async () => {
+    if (page <= 1) return;
+    try {
+      const q = query(
+        collection(db, "content"),
+        orderBy("createdAt", "desc"),
+        limit(itemsPerPage * (page - 1))
+      );
+      const contentSnapshot = await getDocs(q);
+      const contentList = contentSnapshot.docs
+        .slice(-itemsPerPage)
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+      setContentItems(contentList);
+      setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
+      setPage(page - 1);
+      setExpanded({}); // Reset expanded state on page change
+    } catch (error) {
+      console.error("Error fetching prev page:", error);
+    }
+  };
+
+  const toggleExpand = (id) => {
+    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  if (loading) {
+    return <div className="text-gray-600 dark:text-gray-400">Loading...</div>;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">
+        Content
+      </h1>
+      <Link
+        href="/art-show"
+        className="inline-block px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mt-2"
+      >
+        View Art
+      </Link>
+      {contentItems.length > 0 ? (
+        <>
+          <ul className="space-y-6">
+            {contentItems.map((item) => (
+              <li
+                key={item.id}
+                className="bg-white dark:bg-gray-800 p-4 rounded shadow cursor-pointer"
+                onClick={() => toggleExpand(item.id)}
+              >
+                <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+                  {item.title}
+                </h2>
+                <p className="text-gray-700 dark:text-gray-300 mt-2">
+                  {expanded[item.id]
+                    ? item.body
+                    : `${item.body.slice(0, 50)}...`}
+                </p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
+                  Posted on: {new Date(item.createdAt).toLocaleDateString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-6 flex justify-between">
+            <button
+              onClick={handlePrev}
+              disabled={page === 1}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
+            >
+              Previous
+            </button>
+            <span className="text-gray-700 dark:text-gray-300">
+              Page {page}
+            </span>
+            <button
+              onClick={handleNext}
+              disabled={contentItems.length < itemsPerPage}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
+            >
+              Next
+            </button>
+          </div>
+        </>
+      ) : (
+        <p className="text-gray-600 dark:text-gray-400">No content yet.</p>
+      )}
+    </div>
+  );
+}
+
+
+
+/* //src/app/content-show/page.tsx
+
 "use client"; // Tells Next.js this is a Client Component—runs in the browser, not server.
 
 import { useEffect, useState } from "react"; // Hooks for side effects and state management.
@@ -138,7 +305,7 @@ export default function ContentPage() {
             )}
           </ul>
           <div className="mt-6 flex justify-between">
-            {/* // Pagination controls. */}
+        
             <button
               onClick={handlePrev}
               disabled={page === 1} // Grayed out on first page.
@@ -165,3 +332,4 @@ export default function ContentPage() {
     </div>
   );
 }
+ */

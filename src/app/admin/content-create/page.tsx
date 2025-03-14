@@ -108,12 +108,18 @@ export default function AdminContentCreatePage() {
           onChange={(e) => setBody(e.target.value)}
           className="w-full p-2 mb-4 border rounded h-40 dark:bg-gray-700 dark:text-gray-200"
         />
-        <input
-          type="file"
-          accept="image/*" // Restrict to images
-          onChange={(e) => setPhoto(e.target.files ? e.target.files[0] : null)}
-          className="w-full p-2 mb-4 dark:text-gray-200"
-        />
+
+        <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-200">
+          Upload Photo
+          <input
+            type="file"
+            accept="image/*" // Restrict to images
+            onChange={(e) => setPhoto(e.target.files ? e.target.files[0] : null)}
+           className="w-full p-2 mb-4 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
+        
+          />
+        </label>
+        
         <button
           onClick={handleSubmit}
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"

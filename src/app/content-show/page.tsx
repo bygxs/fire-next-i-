@@ -108,11 +108,11 @@ export default function ContentPage() {
         Content
       </h1>
       <Link
-          href="/art-show"
-          className="inline-block px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mt-2"
-        >
-          View Art
-        </Link>
+        href="/art-show"
+        className="inline-block px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mt-2"
+      >
+        View Art
+      </Link>
       {contentItems.length > 0 ? ( // If there’s content, show it.
         <>
           <ul className="space-y-6">
@@ -138,8 +138,7 @@ export default function ContentPage() {
             )}
           </ul>
           <div className="mt-6 flex justify-between">
-            {" "}
-            // Pagination controls.
+            {/* // Pagination controls. */}
             <button
               onClick={handlePrev}
               disabled={page === 1} // Grayed out on first page.

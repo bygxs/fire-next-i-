@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function AdminArtUploadPage() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [photo, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState(""); // For preview
   const router = useRouter();
 
@@ -44,19 +44,21 @@ export default function AdminArtUploadPage() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6 flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Upload Art</h1>
       <div className="bg-white dark:bg-gray-800 p-4 rounded shadow w-full max-w-md">
-        <label className="block text-gray-700 dark:text-gray-200 mb-2">Pick Your Art:</label>
+        <label className="block text-gray-700 dark:text-gray-200 mb-2">Pick Your Art:
         <input
           type="file"
           accept="image/*"
           onChange={(e) => setPhoto(e.target.files ? e.target.files[0] : null)}
           className="w-full p-2 mb-4 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
         />
+        </label>
         <button
           onClick={handleUpload}
           className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Upload
         </button>
+
         {previewUrl && (
           <div className="mt-4">
             <p className="text-green-500 mb-2">Uploaded!</p>
@@ -67,6 +69,7 @@ export default function AdminArtUploadPage() {
             />
           </div>
         )}
+        
         <Link
           href="/art-show"
           className="inline-block px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mt-2"

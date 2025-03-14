@@ -5,47 +5,61 @@ import ThemeToggle from "./components/ThemeToggle";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center pt-20">
-        <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-          Welcome to the Landing Page
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-8">
-          This is a simple landing page with dark mode support.
-        </p>
-        <div className="inline-block gap-x-1 py-2.5 px-2.5">
-          <Link
-            href="/signin-form"
-            className="m-2 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
-          >
-            Go to Sign-In
-          </Link>
+    // Main container with responsive padding
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
+      {/* Centered content with max-width */}
+      <div className="max-w-4xl mx-auto">
+        <div className="flex flex-col items-center justify-center pt-12 sm:pt-20">
+          {/* Responsive heading */}
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
+            Welcome to my simple Page
+          </h1>
+          {/* Responsive paragraph */}
+          <p className="text-gray-600 dark:text-gray-400 mb-8 text-center max-w-2xl">
+            here you can see some writings and art 
+          </p>
+          
+          {/* Button container with responsive stacking */}
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8">
+            <Link
+              href="/signin-form"
+              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 
+                transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 
+                text-center w-full sm:w-auto"
+            >
+              Go to Sign-In
+            </Link>
 
-          <Link
-            href="/signup-form"
-            className="m-2 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
-          >
-            Sign Up
-          </Link>
+            <Link
+              href="/signup-form"
+              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 
+                transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 
+                text-center w-full sm:w-auto"
+            >
+              Sign Up
+            </Link>
 
-          <Link
-            href="/art-show"
-            className="m-2 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 dark:bg-purple-600 dark:hover:bg-purple-700"
-          >
-            View Art
-          </Link>
+            <Link
+              href="/art-show"
+              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-purple-600 
+                transition duration-300 dark:bg-purple-600 dark:hover:bg-purple-700 
+                text-center w-full sm:w-auto"
+            >
+              View Art
+            </Link>
+          </div>
+
+          {/* Responsive text block */}
+    {/* Fictional artist/developer paragraph */}
+    <p className="text-gray-600 dark:text-gray-400 text-center sm:text-left max-w-2xl">
+            I’m Alex Rivera, a digital artist and web developer with a passion for blending 
+            creativity with code. By day, I craft immersive user interfaces with React and 
+            Tailwind, and by night, I paint vibrant digital landscapes that have been 
+            featured in galleries across the coast. My work bridges the gap between 
+            technical precision and artistic expression, delivering experiences that are 
+            both functional and beautiful.
+          </p>
         </div>
-        <p className="m-8 ">
-          Nisi consequat officia laborum occaecat ex occaecat. Eu sit cupidatat
-          mollit magna id excepteur aliquip aute deserunt duis laboris duis
-          voluptate. Sit laboris consequat aute in occaecat et eiusmod. Mollit
-          commodo fugiat laboris deserunt reprehenderit exercitation labore ex
-          do occaecat aliquip in aliquip aute. Elit consectetur excepteur esse
-          do ut non minim culpa tempor ut nostrud culpa sit. Do excepteur culpa
-          pariatur adipisicing velit proident. Est duis velit pariatur veniam.
-          Proident do qui eiusmod anim mollit sit. Ipsum tempor non eu cupidatat
-          adipisicing amet irure.
-        </p>
       </div>
     </div>
   );

@@ -47,9 +47,9 @@ export default function Navbar() {
           <div className="flex-shrink-0">
             <Link href="/">
               BYG:XS
-               <span className="ml-2 mr-2 text-xs italic text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
+              <span className="ml-2 mr-2 text-xs italic text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
                 {packageJson.version}
-              </span> 
+              </span>
             </Link>
 
             <ThemeToggle />
@@ -57,9 +57,8 @@ export default function Navbar() {
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-4">
-            <ThemeToggle />
             <NavLinks isSignedIn={isSignedIn} />
-            <ThemeToggle />
+
             {isSignedIn && (
               <button
                 onClick={handleSignOut}

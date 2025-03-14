@@ -1,4 +1,112 @@
+
+
 "use client";
+
+import { useEffect, useState } from "react";
+import { db } from "../lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackward, faForward } from "@fortawesome/free-solid-svg-icons";
+
+export default function ArtShowPage() {
+  const [artworks, setArtworks] = useState<string[]>([]);
+  const [currentArtworkIndex, setCurrentArtworkIndex] = useState(0);
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      try {
+        setLoading(true);
+        const querySnapshot = await getDocs(collection(db, "artworks"));
+        const artworkUrls: string[] = [];
+        querySnapshot.forEach((doc) => {
+          artworkUrls.push(doc.data().imageUrl);
+        });
+        setArtworks(artworkUrls);
+      } catch (error) {
+        console.error("Error fetching artworks:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArtworks();
+  }, []);
+
+  const handleNextArtwork = () => {
+    setCurrentArtworkIndex((prevIndex) => (prevIndex + 1) % artworks.length);
+  };
+
+  const handlePreviousArtwork = () => {
+    setCurrentArtworkIndex(
+      (prevIndex) => (prevIndex - 1 + artworks.length) % artworks.length
+    );
+  };
+
+  // Swipe gesture handling
+  const handleSwipe = (direction: string) => {
+    if (direction === 'left') {
+      handleNextArtwork();
+    } else if (direction === 'right') {
+      handlePreviousArtwork();
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-white">
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center relative">
+      {/* Display current artwork */}
+      {artworks.length > 0 && (
+        <div className="flex justify-center items-center flex-grow relative">
+          <img
+            src={artworks[currentArtworkIndex]}
+            alt={`Artwork ${currentArtworkIndex + 1}`}
+            className="max-w-full max-h-full object-contain"
+          />
+          {/* Navigation buttons */}
+          <button
+            title="Previous Artwork"
+            onClick={handlePreviousArtwork}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 z-10"
+          >
+            <FontAwesomeIcon icon={faBackward} />
+          </button>
+
+          <button
+            title="Next Artwork"
+            onClick={handleNextArtwork}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 z-10"
+          >
+            <FontAwesomeIcon icon={faForward} />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* "use client";
 
 import { useEffect, useState } from "react";
 import { db } from "../lib/firebase";
@@ -53,9 +161,7 @@ export default function ArtShowPage() {
   if (loading) {
     return (
       <div
-        className={`min-h-screen ${
-          darkMode ? "bg-gray-900" : "bg-white"
-        } flex justify-center items-center`}
+        className={`min-h-screen flex justify-center items-center`}
       >
         Loading...
       </div>
@@ -64,38 +170,12 @@ export default function ArtShowPage() {
 
   return (
     <div
-      className={`min-h-screen
-        
-    
-      
-      
-      flex flex-col items-center justify-center`} // Added justify-center and removed  //   ${darkMode ? "bg-gray-900" : "bg-white" }
+      className={`min-h-screen flex flex-col items-center justify-center`} // Added justify-center and removed  //   ${darkMode ? "bg-gray-900" : "bg-white" }
     >
-      {/* Back button for mobile navigation */}
-      {/*  <button
-        title="Go back"
-        onClick={() => router.push("/")}
-        className="fixed top-4 left-4 p-2 bg-gray-700 text-white rounded z-10"
-      >
-        <FontAwesomeIcon icon={faDoorOpen} />
-      </button>
-
-      <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="fixed top-4 right-4 p-2 bg-gray-700 text-white rounded z-10"
-      >
-        {darkMode ? (
-          <FontAwesomeIcon icon={faCloudMoon} />
-        ) : (
-          <FontAwesomeIcon icon={faSun} />
-        )}
-      </button> */}
-
-      {/* Display current artwork */}
+     
       {artworks.length > 0 && (
         <div className="flex justify-center items-center flex-grow">
-          {" "}
-          {/*Added flex-grow to make image take up remaining space*/}
+       
           <img
             src={artworks[currentArtworkIndex]}
             alt={`Artwork ${currentArtworkIndex + 1}`}
@@ -104,7 +184,7 @@ export default function ArtShowPage() {
         </div>
       )}
 
-      {/* Navigation buttons */}
+      {
       <div className="mt-4 flex space-x-134">
         <button
           title="Previous Artwork"
@@ -122,19 +202,17 @@ export default function ArtShowPage() {
           <FontAwesomeIcon icon={faForward} />
         </button>
       </div>
-
-      {/*    <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="m-4 px-2 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
-      >
-        <FontAwesomeIcon
-          icon={darkMode ? faSun : faCloudMoon}
-          className="ml-2"
-        />
-      </button> */}
     </div>
   );
 }
+ */
+
+
+
+
+
+
+
 
 /* // File: src/app/art-show/page.tsx
 "use client";

@@ -23,7 +23,7 @@ export default function Onboarding() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-/*   useEffect(() => {
+   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (!user) {
         router.push("/signin-form");
@@ -39,7 +39,7 @@ export default function Onboarding() {
     });
 
     return () => unsubscribe();
-  }, [router]); */
+  }, [router]); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

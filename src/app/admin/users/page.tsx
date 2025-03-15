@@ -240,7 +240,7 @@ export default function AdminPage() {
       </div>
 
       {/* Collapsible Create User Form */}
-      <div className="mb-6 bg-white dark:bg-gray-800 p-6 rounded shadow">
+      <div className="mb-6 bg-white dark:bg-gray-800 hover:bg-green-800 p-6 rounded-2xl shadow">
         <button
           onClick={() => setIsCreateFormCollapsed(!isCreateFormCollapsed)}
           className="w-full text-left py-2 font-semibold text-gray-800 dark:text-gray-200"
@@ -340,11 +340,11 @@ export default function AdminPage() {
 
       {/* Users List */}
       {filteredUsers.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
           {filteredUsers.map((user) => (
             <div
               key={user.id}
-              className="bg-white dark:bg-gray-800 p-4 rounded shadow"
+              className="bg-white dark:bg-gray-800 hover:bg-blue-800 p-4 rounded shadow"
             >
               <h3 className="font-semibold text-xl text-gray-700 dark:text-gray-300 cursor-pointer"
                 onClick={() =>

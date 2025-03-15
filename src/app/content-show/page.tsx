@@ -1,23 +1,22 @@
-
 // File: src/app/content-show/page.tsx
 "use client";
 
 /**
  * A client-side page component for displaying paginated content from Firestore.
  * Features: snippets with expand-on-click, search by title/body, sort by createdAt,
- * filter by tags, and pagination.
+ * filter by tags, pagination, and images from posts.
  */
 
 import { useEffect, useState } from "react";
 import {
-  collection, // Reference to Firestore "content" collection
-  getDocs, // Fetch all docs in a query
-  query, // Build Firestore query with conditions
-  orderBy, // Sort results (e.g., by "createdAt")
-  limit, // Limit items per fetch (pagination)
-  startAfter, // Start after last doc for "Next"
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+  startAfter,
 } from "firebase/firestore";
-import { db } from "../lib/firebase"; // Firestore instance
+import { db } from "../lib/firebase";
 import Link from "next/link";
 
 export default function ContentPage() {
@@ -41,16 +40,16 @@ export default function ContentPage() {
         setLoading(true);
         const q = query(
           collection(db, "content"),
-          orderBy("createdAt", sortOrder), // Sort by creation date
+          orderBy("createdAt", sortOrder),
           limit(itemsPerPage)
         );
         const contentSnapshot = await getDocs(q);
         const contentList = contentSnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data(), // Spread includes title, body, createdAt, tags (if exists)
+          ...doc.data(),
         }));
         setContentItems(contentList);
-        setFilteredItems(contentList); // Initial filter matches all
+        setFilteredItems(contentList);
         setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
       } catch (error) {
         console.error("Error fetching content:", error);
@@ -59,7 +58,7 @@ export default function ContentPage() {
       }
     };
     fetchContent();
-  }, [sortOrder]); // Re-fetch on sort change
+  }, [sortOrder]);
 
   /**
    * Fetches next page of content.
@@ -139,7 +138,7 @@ export default function ContentPage() {
       }
       if (selectedTag) {
         result = result.filter((item) =>
-          item.tags?.includes(selectedTag) // Assumes tags is an array in Firestore
+          item.tags?.includes(selectedTag)
         );
       }
       setFilteredItems(result);
@@ -220,6 +219,13 @@ export default function ContentPage() {
                     ? item.body
                     : `${item.body.slice(0, 50)}...`}
                 </p>
+                {item.photoUrl && (
+                  <img
+                    src={item.photoUrl}
+                    alt={item.title}
+                    className="mt-2 max-w-full h-auto rounded border-2 border-gray-300 dark:border-gray-700"
+                  />
+                )}
                 <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
                   Posted on: {new Date(item.createdAt).toLocaleDateString()}
                 </p>
@@ -258,45 +264,58 @@ export default function ContentPage() {
 
 
 
+// File: src/app/content-show/page.tsx
+//"use client";
 
-
-/* // File: src/app/content-show/page.tsx
-"use client";
-
+/**
+ * A client-side page component for displaying paginated content from Firestore.
+ * Features: snippets with expand-on-click, search by title/body, sort by createdAt,
+ * filter by tags, and pagination.
+ */
+/* 
 import { useEffect, useState } from "react";
 import {
-  collection,
-  getDocs,
-  query,
-  orderBy,
-  limit,
-  startAfter,
+  collection, // Reference to Firestore "content" collection
+  getDocs, // Fetch all docs in a query
+  query, // Build Firestore query with conditions
+  orderBy, // Sort results (e.g., by "createdAt")
+  limit, // Limit items per fetch (pagination)
+  startAfter, // Start after last doc for "Next"
 } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { db } from "../lib/firebase"; // Firestore instance
 import Link from "next/link";
 
 export default function ContentPage() {
-  const [contentItems, setContentItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [lastDoc, setLastDoc] = useState(null);
-  const [page, setPage] = useState(1);
+  const [contentItems, setContentItems] = useState([]); // All fetched content items
+  const [filteredItems, setFilteredItems] = useState([]); // Filtered/search results
+  const [loading, setLoading] = useState(true); // Loading state
+  const [lastDoc, setLastDoc] = useState(null); // Last doc for pagination
+  const [page, setPage] = useState(1); // Current page number
   const [expanded, setExpanded] = useState({}); // Tracks expanded state per item
-  const itemsPerPage = 5;
+  const [searchQuery, setSearchQuery] = useState(""); // Search input value
+  const [sortOrder, setSortOrder] = useState("desc"); // Sort: "desc" (newest) or "asc" (oldest)
+  const [selectedTag, setSelectedTag] = useState(""); // Selected filter tag
+  const itemsPerPage = 5; // Items per page
 
+  /**
+   * Fetches initial content on mount and resets pagination.
+   *//* 
   useEffect(() => {
     const fetchContent = async () => {
       try {
+        setLoading(true);
         const q = query(
           collection(db, "content"),
-          orderBy("createdAt", "desc"),
+          orderBy("createdAt", sortOrder), // Sort by creation date
           limit(itemsPerPage)
         );
         const contentSnapshot = await getDocs(q);
         const contentList = contentSnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data(),
+          ...doc.data(), // Spread includes title, body, createdAt, tags (if exists)
         }));
         setContentItems(contentList);
+        setFilteredItems(contentList); // Initial filter matches all
         setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
       } catch (error) {
         console.error("Error fetching content:", error);
@@ -305,14 +324,14 @@ export default function ContentPage() {
       }
     };
     fetchContent();
-  }, []);
+  }, [sortOrder]); // Re-fetch on sort change
 
   const handleNext = async () => {
     if (!lastDoc) return;
     try {
       const q = query(
         collection(db, "content"),
-        orderBy("createdAt", "desc"),
+        orderBy("createdAt", sortOrder),
         startAfter(lastDoc),
         limit(itemsPerPage)
       );
@@ -322,20 +341,22 @@ export default function ContentPage() {
         ...doc.data(),
       }));
       setContentItems(contentList);
+      setFilteredItems(contentList);
       setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
       setPage(page + 1);
-      setExpanded({}); // Reset expanded state on page change
+      setExpanded({});
     } catch (error) {
       console.error("Error fetching next page:", error);
     }
   };
 
+ 
   const handlePrev = async () => {
     if (page <= 1) return;
     try {
       const q = query(
         collection(db, "content"),
-        orderBy("createdAt", "desc"),
+        orderBy("createdAt", sortOrder),
         limit(itemsPerPage * (page - 1))
       );
       const contentSnapshot = await getDocs(q);
@@ -346,16 +367,52 @@ export default function ContentPage() {
           ...doc.data(),
         }));
       setContentItems(contentList);
+      setFilteredItems(contentList);
       setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
       setPage(page - 1);
-      setExpanded({}); // Reset expanded state on page change
+      setExpanded({});
     } catch (error) {
       console.error("Error fetching prev page:", error);
     }
   };
 
+  
+   Toggles expanded state for a content item.
+   //@param {string} id - The item's Firestore doc ID
+   
   const toggleExpand = (id) => {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  
+   // Filters content by search query and selected tag.
+   
+  useEffect(() => {
+    const filterItems = () => {
+      let result = [...contentItems];
+      if (searchQuery) {
+        result = result.filter(
+          (item) =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.body.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+      if (selectedTag) {
+        result = result.filter((item) =>
+          item.tags?.includes(selectedTag) // Assumes tags is an array in Firestore
+        );
+      }
+      setFilteredItems(result);
+    };
+    filterItems();
+  }, [searchQuery, selectedTag, contentItems]);
+
+   Extracts unique tags from all content items for filter dropdown.
+   // @returns {string[]} Array of unique tags
+   
+  const getUniqueTags = () => {
+    const allTags = contentItems.flatMap((item) => item.tags || []);
+    return [...new Set(allTags)];
   };
 
   if (loading) {
@@ -369,14 +426,46 @@ export default function ContentPage() {
       </h1>
       <Link
         href="/art-show"
-        className="inline-block px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mt-2"
+        className="inline-block px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors mb-4"
       >
         View Art
       </Link>
-      {contentItems.length > 0 ? (
+
+      // Search, Sort, Filter Controls 
+      <div className="mb-6 flex flex-col sm:flex-row gap-4">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by title or content..."
+          className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200 w-full sm:w-1/3"
+        />
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
+        >
+          <option value="desc">Newest First</option>
+          <option value="asc">Oldest First</option>
+        </select>
+        <select
+          value={selectedTag}
+          onChange={(e) => setSelectedTag(e.target.value)}
+          className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
+        >
+          <option value="">All Tags</option>
+          {getUniqueTags().map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {filteredItems.length > 0 ? (
         <>
           <ul className="space-y-6">
-            {contentItems.map((item) => (
+            {filteredItems.map((item) => (
               <li
                 key={item.id}
                 className="bg-white dark:bg-gray-800 p-4 rounded shadow cursor-pointer"
@@ -417,11 +506,13 @@ export default function ContentPage() {
           </div>
         </>
       ) : (
-        <p className="text-gray-600 dark:text-gray-400">No content yet.</p>
+        <p className="text-gray-600 dark:text-gray-400">No content matches.</p>
       )}
     </div>
   );
 }
 
-
  */
+
+
+ 

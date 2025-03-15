@@ -1,4 +1,4 @@
-'use client'; // Client-side directive for Next.js
+"use client"; // Client-side directive for Next.js
 
 /**
  * Dashboard page for authenticated users.
@@ -28,24 +28,33 @@ interface Profile {
 }
 
 // SocialLinks Component
-const SocialLinks = ({ links }: { links?: Profile['socialLinks'] }) => (
+const SocialLinks = ({ links }: { links?: Profile["socialLinks"] }) => (
   <div className="mt-6 space-y-2">
     <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200">
       Social Links
     </h3>
     <div className="flex gap-4">
       {links?.linkedin && (
-        <a href={links.linkedin} className="text-blue-600 hover:text-blue-800 dark:text-blue-400">
+        <a
+          href={links.linkedin}
+          className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
+        >
           LinkedIn
         </a>
       )}
       {links?.twitter && (
-        <a href={links.twitter} className="text-sky-500 hover:text-sky-700 dark:text-sky-400">
+        <a
+          href={links.twitter}
+          className="text-sky-500 hover:text-sky-700 dark:text-sky-400"
+        >
           Twitter
         </a>
       )}
       {links?.facebook && (
-        <a href={links.facebook} className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400">
+        <a
+          href={links.facebook}
+          className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400"
+        >
           Facebook
         </a>
       )}
@@ -98,77 +107,45 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto pt-6 sm:pt-8 lg:pt-10">
- 
-       <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
-  Welcome to the Dashboard,{" "}
-  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-    {profile?.name}
-  </span>
-</h3>
-<h4 className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 text-center">
-  <span className="font-semibold italic">{userEmail || "User"}</span> is used to log in.
-</h4>
-
-
-{/* Admin Section */}
-{profile?.role === "admin" && (
-  <div className="mb-6 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-    <p className="text-green-500 text-center text-lg sm:text-xl font-medium mb-6">
-      You’re an admin! Secret powers unlocked.
-    </p>
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <Link
-        href="/admin/users"
-        className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 text-center sm:w-auto w-full"
-      >
-        Go to Admin Panel
-      </Link>
-      <Link
-        href="/admin/content-create"
-        className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 text-center sm:w-auto w-full"
-      >
-        Manage Content
-      </Link>
-      <Link
-        href="/admin/art-upload"
-        className="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-all duration-300 text-center sm:w-auto w-full"
-      >
-        Upload Art
-      </Link>
-    </div>
-  </div>
-)}
-
-
+        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
+          Welcome to the Dashboard,{" "}
+          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            {profile?.name}
+          </span>
+        </h3>
+        <h4 className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 text-center">
+          <span className="font-semibold italic">{userEmail || "User"}</span> is
+          used to log in.
+        </h4>
 
         {/* Admin Section */}
-    {/*     {profile?.role === "admin" && (
-          <div className="mb-6 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md ">
-            <p className="text-green-500 text-center sm:text-left mb-4">
+        {profile?.role === "admin" && (
+          <div className="mb-6 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+            <p className="text-green-500 text-center text-lg sm:text-xl font-medium mb-6">
               You’re an admin! Secret powers unlocked.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/admin/users"
-                className="px-6 py-3 bg-blue-700 text-white rounded hover:bg-blue-600 text-center"
+                className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 text-center sm:w-auto w-full"
               >
                 Go to Admin Panel
               </Link>
               <Link
                 href="/admin/content-create"
-                className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 text-center"
+                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 text-center sm:w-auto w-full"
               >
                 Manage Content
               </Link>
               <Link
                 href="/admin/art-upload"
-                className="px-6 py-3 bg-emerald-600 text-white rounded hover:bg-emerald-700 text-center"
+                className="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-all duration-300 text-center sm:w-auto w-full"
               >
                 Upload Art
               </Link>
             </div>
           </div>
-        )} */}
+        )}
 
         {/* Navigation Links */}
         <div className="mb-6 flex flex-col sm:flex-row gap-4 justify-center">
@@ -217,7 +194,7 @@ export default function Dashboard() {
                       value={profile.interests?.join(", ")}
                     />
                   </div>
-                <SocialLinks links={profile.socialLinks} />
+                  <SocialLinks links={profile.socialLinks} />
                 </div>
               </div>
             </div>

@@ -46,7 +46,7 @@ export default function Home() {
             <ArtCarousel />
           </div>
           </div>
-            <p className="text-gray-600 dark:text-gray-400 text-center md:text-left max-w-2xl">
+            <p className="text-gray-600 italic dark:text-gray-400 text-center md:text-left max-w-2xl">
               let them have a look around, <br /> and find what they like. <br />{" "}
               AND dislike, for that matter. <br /> done serving peopel, i am.{" "}
               <br /> done prsenting myself suitable, <br /> to hell with that.{" "}

@@ -19,9 +19,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
-  const [artworks, setArtworks] = useState([]); // Art URLs from Storage
+  const [artworks, setArtworks] = useState<string[]>([]); // Art URLs from Storage
   const [currentArtIndex, setCurrentArtIndex] = useState(0); // Current art index
-  const [latestContent, setLatestContent] = useState(null); // Latest content item
+  interface Content {
+    id: string;
+    title: string;
+    body: string;
+    photoUrl?: string;
+  }
+
+  const [latestContent, setLatestContent] = useState<Content | null>(null); // Latest content item
 
   /**
    * Fetch artworks from Storage and latest content from Firestore on mount.
@@ -49,10 +56,15 @@ export default function Home() {
           limit(1) // Get only the newest item
         );
         const contentSnapshot = await getDocs(q);
-        const contentList = contentSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const contentList = contentSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            title: data.title,
+            body: data.body,
+            photoUrl: data.photoUrl,
+          };
+        });
         setLatestContent(contentList[0] || null);
       } catch (error) {
         console.error("Error fetching latest content:", error);
@@ -97,7 +109,10 @@ export default function Home() {
                   src={artworks[currentArtIndex]}
                   alt={`Artwork ${currentArtIndex + 1}`}
                   className="w-full h-48 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-700"
-                  onError={(e) => (e.target.style.display = "none")}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = "none";
+                  }}
                 />
 
               </Link>

@@ -11,9 +11,9 @@ import Link from "next/link";
 export default function AdminArtUploadPage() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [photos, setPhotos] = useState([]);
-  const [previewUrls, setPreviewUrls] = useState([]);
-  const [artworks, setArtworks] = useState([]);
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [artworks, setArtworks] = useState<{ id: string; imageUrl: string }[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function AdminArtUploadPage() {
     syncArtworksWithStorage();
   };
 
-  const handleDelete = async (id, imageUrl) => {
+  const handleDelete = async (id: string, imageUrl: string) => {
     if (!confirm("Delete this artwork?")) return;
     const storageRef = ref(storage, `art/${id}`);
     await deleteObject(storageRef);

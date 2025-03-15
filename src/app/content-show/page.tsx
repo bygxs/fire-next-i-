@@ -15,19 +15,31 @@ import {
   orderBy,
   limit,
   startAfter,
+  OrderByDirection,
+  QueryDocumentSnapshot,
+  DocumentData,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import Link from "next/link";
 
 export default function ContentPage() {
-  const [contentItems, setContentItems] = useState([]); // All fetched content items
-  const [filteredItems, setFilteredItems] = useState([]); // Filtered/search results
+  interface ContentItem {
+    id: string;
+    title: string;
+    body: string;
+    createdAt: number;
+    tags?: string[];
+    photoUrl?: string;
+  }
+
+  const [contentItems, setContentItems] = useState<ContentItem[]>([]); // All fetched content items
+  const [filteredItems, setFilteredItems] = useState<ContentItem[]>([]); // Filtered/search results
   const [loading, setLoading] = useState(true); // Loading state
-  const [lastDoc, setLastDoc] = useState(null); // Last doc for pagination
+  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot<DocumentData> | null>(null); // Last doc for pagination
   const [page, setPage] = useState(1); // Current page number
-  const [expanded, setExpanded] = useState({}); // Tracks expanded state per item
+  const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({}); // Tracks expanded state per item
   const [searchQuery, setSearchQuery] = useState(""); // Search input value
-  const [sortOrder, setSortOrder] = useState("desc"); // Sort: "desc" (newest) or "asc" (oldest)
+  const [sortOrder, setSortOrder] = useState<OrderByDirection>("desc"); // Sort: "desc" (newest) or "asc" (oldest)
   const [selectedTag, setSelectedTag] = useState(""); // Selected filter tag
   const itemsPerPage = 5; // Items per page
 
@@ -44,10 +56,17 @@ export default function ContentPage() {
           limit(itemsPerPage)
         );
         const contentSnapshot = await getDocs(q);
-        const contentList = contentSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const contentList = contentSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            title: data.title,
+            body: data.body,
+            createdAt: data.createdAt,
+            tags: data.tags,
+            photoUrl: data.photoUrl,
+          };
+        });
         setContentItems(contentList);
         setFilteredItems(contentList);
         setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
@@ -73,10 +92,17 @@ export default function ContentPage() {
         limit(itemsPerPage)
       );
       const contentSnapshot = await getDocs(q);
-      const contentList = contentSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const contentList = contentSnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          title: data.title,
+          body: data.body,
+          createdAt: data.createdAt,
+          tags: data.tags,
+          photoUrl: data.photoUrl,
+        };
+      });
       setContentItems(contentList);
       setFilteredItems(contentList);
       setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
@@ -101,10 +127,17 @@ export default function ContentPage() {
       const contentSnapshot = await getDocs(q);
       const contentList = contentSnapshot.docs
         .slice(-itemsPerPage)
-        .map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        .map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            title: data.title,
+            body: data.body,
+            createdAt: data.createdAt,
+            tags: data.tags,
+            photoUrl: data.photoUrl,
+          };
+        });
       setContentItems(contentList);
       setFilteredItems(contentList);
       setLastDoc(contentSnapshot.docs[contentSnapshot.docs.length - 1]);
@@ -119,7 +152,7 @@ export default function ContentPage() {
    * Toggles expanded state for a content item.
    * @param {string} id - The item's Firestore doc ID
    */
-  const toggleExpand = (id) => {
+  const toggleExpand = (id: string | number) => {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
@@ -180,15 +213,19 @@ export default function ContentPage() {
           placeholder="Search by title or content..."
           className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200 w-full sm:w-1/3"
         />
+        <label htmlFor="sortOrder" className="sr-only">Sort Order</label>
         <select
+          id="sortOrder"
           value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
+          onChange={(e) => setSortOrder(e.target.value as OrderByDirection)}
           className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
         >
           <option value="desc">Newest First</option>
           <option value="asc">Oldest First</option>
         </select>
+        <label htmlFor="tagFilter" className="sr-only">Filter by Tag</label>
         <select
+          id="tagFilter"
           value={selectedTag}
           onChange={(e) => setSelectedTag(e.target.value)}
           className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200"

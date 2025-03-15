@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward, faForward } from "@fortawesome/free-solid-svg-icons";
 
 export default function ArtShowPage() {
-  const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState<{ id: string; imageUrl: string }[]>([]);
   const [currentArtworkIndex, setCurrentArtworkIndex] = useState(0);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -41,7 +41,7 @@ export default function ArtShowPage() {
     );
   };
 
-  const handleSwipe = (direction) => {
+  const handleSwipe = (direction: string) => {
     if (direction === 'left') {
       handleNextArtwork();
     } else if (direction === 'right') {

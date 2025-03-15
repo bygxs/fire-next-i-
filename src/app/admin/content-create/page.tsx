@@ -223,18 +223,21 @@ export default function AdminContentCreatePage() {
           placeholder="Search by title or content..."
           className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200 w-full sm:w-1/2"
         />
-        <select
-          value={selectedTag}
-          onChange={(e) => setSelectedTag(e.target.value)}
-          className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
-        >
-          <option value="">All Tags</option>
-          {getUniqueTags().map((tag) => (
-            <option key={tag} value={tag}>
-              {tag}
-            </option>
-          ))}
-        </select>
+        <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-200">
+          Filter by Tag
+          <select
+            value={selectedTag}
+            onChange={(e) => setSelectedTag(e.target.value)}
+            className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-700 dark:text-gray-200"
+          >
+            <option value="">All Tags</option>
+            {getUniqueTags().map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
       {/* Content List */}

@@ -35,6 +35,20 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-25L0KPBS0H"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-25L0KPBS0H');
+      `,
+          }}
+        />
       </head>
       <body className="bg-white dark:bg-[#191919] text-[#37352f] dark:text-[#ffffffcf]">
         <ThemeProvider
@@ -44,15 +58,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-            
-            
-        {/*     <Navbar /> */}
-{/* <main className="flex-grow min-h-screen">{children}</main> */}
+            <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
 
- <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
-            
             <Toaster />
-      {/*       <footer className=" text-center py-4 text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
+            {/*       <footer className=" text-center py-4 text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
               Version: {packageJson.version}
             </footer> */}
           </div>

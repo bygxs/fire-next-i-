@@ -47,8 +47,8 @@ export default function RootLayout({
             
             
         {/*     <Navbar /> */}
-{/* 
-            <main className="flex-grow min-h-screen">{children}</main> */}
+{/* <main className="flex-grow min-h-screen">{children}</main> */}
+
  <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
             
             <Toaster />

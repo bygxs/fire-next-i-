@@ -23,7 +23,7 @@ export default function Onboarding() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-   useEffect(() => {
+  useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (!user) {
         router.push("/signin-form");
@@ -39,7 +39,7 @@ export default function Onboarding() {
     });
 
     return () => unsubscribe();
-  }, [router]); 
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,23 +97,6 @@ export default function Onboarding() {
           Complete Your Profile
         </h1>
         <form onSubmit={handleSubmit}>
-          {/* Profile Picture */}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 dark:text-gray-300 mb-2"
-              htmlFor="profilePicture"
-            >
-              Profile Picture
-            </label>
-            <input
-              type="file"
-              id="profilePicture"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-            />
-          </div>
-
           {/* Name */}
           <div className="mb-4">
             <label
@@ -131,26 +114,6 @@ export default function Onboarding() {
               }
               required
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-            />
-          </div>
-
-          {/* Bio */}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 dark:text-gray-300 mb-2"
-              htmlFor="bio"
-            >
-              Bio
-            </label>
-            <textarea
-              id="bio"
-              value={formData.bio}
-              onChange={(e) =>
-                setFormData({ ...formData, bio: e.target.value })
-              }
-              required
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-              rows={4}
             />
           </div>
 
@@ -189,6 +152,43 @@ export default function Onboarding() {
                 setFormData({ ...formData, dob: e.target.value })
               }
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+            />
+          </div>
+
+          {/* Profile Picture */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 dark:text-gray-300 mb-2"
+              htmlFor="profilePicture"
+            >
+              Profile Picture
+            </label>
+            <input
+              type="file"
+              id="profilePicture"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+            />
+          </div>
+
+          {/* Bio */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 dark:text-gray-300 mb-2"
+              htmlFor="bio"
+            >
+              Bio
+            </label>
+            <textarea
+              id="bio"
+              value={formData.bio}
+              onChange={(e) =>
+                setFormData({ ...formData, bio: e.target.value })
+              }
+              required
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+              rows={4}
             />
           </div>
 

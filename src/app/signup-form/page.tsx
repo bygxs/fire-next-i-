@@ -1,4 +1,16 @@
-//// src/app/signup-form/page.tsx
+/* "use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+export default function SignUpRedirect() {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace("/signInSignUp?mode=signup");
+  }, [router]);
+  return null;
+}
+ */
+ //// src/app/signup-form/page.tsx
 
 "use client";
 
@@ -66,14 +78,14 @@ export default function SignUpForm() {
           Sign Up
         </h2>
 
-        {/* Display success message */}
+       
         {success && (
           <div className="mb-4 p-4 bg-green-100 text-green-800 rounded-lg dark:bg-green-800 dark:text-green-100">
             {success}
           </div>
         )}
 
-        {/* Display error message */}
+    
         {error && (
           <div className="mb-4 p-4 bg-red-100 text-red-800 rounded-lg dark:bg-red-800 dark:text-red-100">
             {error}
@@ -124,3 +136,4 @@ export default function SignUpForm() {
     </div>
   );
 }
+

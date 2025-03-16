@@ -81,12 +81,21 @@ export default function Home() {
             >
               Sign Up
             </Link>
+
             <button
               className="px-4 py-2 sm:px-6 sm:py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 dark:bg-purple-600 dark:hover:bg-purple-700 text-center w-full sm:w-auto"
               onClick={handleCarouselClick}
             >
               View Art
             </button>
+
+ <Link
+              href="/signsign"
+              className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
+            >
+              Sign Up & In
+            </Link>
+            
           </div>
 {/* 
          <BlogGlimpse /> */}

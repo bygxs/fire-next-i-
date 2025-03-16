@@ -355,76 +355,86 @@ export default function AdminPage() {
       {/* Users List */}
       {filteredUsers.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          
+          
+          
+          
           {filteredUsers.map((user) => (
-            <div
-              key={user.id}
-              className="bg-white dark:bg-gray-800 hover:bg-blue-800 p-4 rounded shadow"
-            >
-              {/* Profile Picture */}
-              <div className="flex justify-center mb-2">
-                <img
-                  src={profilePictureUrls[user.id] || "/default-user.png"}
-                  alt={`${user.name}'s Profile`}
-                  className="w-20 h-20 rounded-full object-cover"
-                />
-              </div>
+  <div
+    key={user.id}
+    className="bg-white dark:bg-gray-800 hover:bg-blue-800 p-4 rounded shadow cursor-pointer"
+    onClick={() => setExpandedUserId(expandedUserId === user.id ? null : user.id)}
+  >
+    {/* Profile Picture */}
+    <div className="flex justify-center mb-2">
+      <img
+        src={profilePictureUrls[user.id] || "/default-user.png"}
+        alt={`${user.name}'s Profile`}
+        className="w-20 h-20 rounded-full object-cover"
+      />
+    </div>
 
-              {/* User Details */}
-              <h3 className="font-semibold text-xl text-gray-700 dark:text-gray-300 cursor-pointer"
-                onClick={() =>
-                  setExpandedUserId(expandedUserId === user.id ? null : user.id)
-                }
+    {/* User Details */}
+    <h3 className="font-semibold text-xl text-gray-700 dark:text-gray-300">
+      {user.name || "No name"}
+    </h3>
+
+    {expandedUserId === user.id && (
+      <div>
+        <p className="text-gray-700 dark:text-gray-300">
+          <strong>Role:</strong> {user.role || "user"}
+        </p>
+        <p className="text-gray-700 dark:text-gray-300">
+          <strong>Email:</strong> {user.email || "No email"}
+        </p>
+        <p className="text-gray-500 dark:text-gray-500">
+          <strong>ID:</strong> {user.id}
+        </p>
+
+        {/* Tags */}
+        {user.tags && user.tags.length > 0 && (
+          <div className="flex flex-wrap mt-2">
+            {user.tags.map((tag: string, index: number) => (
+              <span
+                key={index}
+                className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded mr-2 mb-1 text-sm"
               >
-                {user.name || "No name"}
-              </h3>
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
 
-              {expandedUserId === user.id && (
-                <div>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    <strong>Role:</strong> {user.role || "user"}
-                  </p>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    <strong>Email:</strong> {user.email || "No email"}
-                  </p>
-                  <p className="text-gray-500 dark:text-gray-500">
-                    <strong>ID:</strong> {user.id}
-                  </p>
+        <div className="flex justify-between mt-4">
+          {/* Update Role Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent the card from collapsing/expanding
+              handleUpdateRole(user);
+            }}
+            className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+          >
+            Toggle Role
+          </button>
 
-                  {/* Tags */}
-                  {user.tags && user.tags.length > 0 && (
-                    <div className="flex flex-wrap mt-2">
-                      {user.tags.map((tag: string, index: number) => (
-                        <span
-                          key={index}
-                          className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded mr-2 mb-1 text-sm"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+          {/* Delete Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent the card from collapsing/expanding
+              handleDeleteUser(user);
+            }}
+            className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+))}
 
-                  <div className="flex justify-between mt-4">
-                    {/* Update Role Button */}
-                    <button
-                      onClick={() => handleUpdateRole(user)}
-                      className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-                    >
-                      Toggle Role
-                    </button>
 
-                    {/* Delete Button */}
-                    <button
-                      onClick={() => handleDeleteUser(user)}
-                      className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
+
         </div>
       ) : (
         <p className="text-gray-600 dark:text-gray-400">No users found.</p>

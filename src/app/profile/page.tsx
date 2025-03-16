@@ -1,4 +1,3 @@
-//src/app/profile/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -22,6 +21,7 @@ export default function Profile() {
     socialLinks: { linkedin: "", twitter: "", facebook: "" },
   });
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null); // Add this state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -49,6 +49,13 @@ export default function Profile() {
               facebook: "",
             },
           });
+
+          // Fetch profile picture URL
+          if (data.profilePictureUrl) {
+            setProfilePictureUrl(data.profilePictureUrl);
+          } else {
+            setProfilePictureUrl("/default-user.png"); // Fallback to default placeholder
+          }
         }
       }
     });
@@ -86,9 +93,9 @@ export default function Profile() {
         throw new Error("User not authenticated");
       }
 
-      let imageUrl = profile?.profilePictureUrl || null;
+      let imageUrl = profilePictureUrl || "/default-user.png"; // Use existing URL or default
 
-      // Upload profile picture to Firebase Storage
+      // Upload profile picture to Firebase Storage if a new file is selected
       if (profilePicture) {
         const storageRef = ref(storage, `profile-pictures/${user.uid}`);
         await uploadBytes(storageRef, profilePicture);
@@ -102,7 +109,7 @@ export default function Profile() {
           .split(",")
           .map((interest) => interest.trim()),
         socialLinks: formData.socialLinks,
-        profilePictureUrl: imageUrl,
+        profilePictureUrl: imageUrl, // Save the new or existing image URL
       });
 
       console.log("Profile updated successfully!");
@@ -137,6 +144,15 @@ export default function Profile() {
         </h1>
         {!isEditing ? (
           <>
+            {/* Profile Picture */}
+            <div className="flex justify-center mb-4">
+              <img
+                src={profilePictureUrl || "/default-user.png"} // Use profilePictureUrl or default
+                alt={`${profile.name}'s Profile`}
+                className="w-20 h-20 rounded-full object-cover"
+              />
+            </div>
+
             <div className="mb-4">
               <p className="text-gray-600 dark:text-gray-400">
                 <strong>Name:</strong> {profile.name}
@@ -176,7 +192,7 @@ export default function Profile() {
           </>
         ) : (
           <form onSubmit={handleSubmit}>
-            {/* Form fields similar to Onboarding page */}
+            {/* Profile Picture Upload */}
             <div className="mb-4">
               <label
                 className="block text-gray-700 dark:text-gray-300 mb-2"
@@ -192,6 +208,8 @@ export default function Profile() {
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
               />
             </div>
+
+            {/* Other form fields... */}
             <div className="mb-4">
               <label
                 className="block text-gray-700 dark:text-gray-300 mb-2"
@@ -247,6 +265,7 @@ export default function Profile() {
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
               />
             </div>
+
             <div className="mb-4">
               <label
                 className="block text-gray-700 dark:text-gray-300 mb-2"
@@ -264,6 +283,7 @@ export default function Profile() {
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
               />
             </div>
+
             <div className="mb-4">
               <label
                 className="block text-gray-700 dark:text-gray-300 mb-2"
@@ -282,6 +302,7 @@ export default function Profile() {
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
               />
             </div>
+
             <div className="mb-4">
               <label className="block text-gray-700 dark:text-gray-300 mb-2">
                 Social Media Links
@@ -334,7 +355,7 @@ export default function Profile() {
                 />
               </div>
             </div>
-            {/* Other form fields... */}
+
             <div className="flex space-x-4">
               <button
                 type="submit"

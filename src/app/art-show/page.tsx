@@ -7,7 +7,8 @@ import { db } from "../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackward, faForward } from "@fortawesome/free-solid-svg-icons";
+import { faBackward, faForward, faHome } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export default function ArtShowPage() {
   const [artworks, setArtworks] = useState<{ id: string; imageUrl: string }[]>([]);
@@ -58,7 +59,15 @@ export default function ArtShowPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative">
+    <div className="min-h-screen flex flex-col items-center justify-center relative ">
+      {/* Exit Button */}
+      <Link
+        href="/"
+        className="fixed top-4 left-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 z-20"
+        title="Back to Home"
+      >
+        <FontAwesomeIcon icon={faHome} />
+      </Link>
       {artworks.length > 0 && (
         <div className="flex justify-center items-center flex-grow relative max-h-[80vh]">
           <img

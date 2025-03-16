@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db, storage } from "../../lib/firebase";
 import { collection, getDocs, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { ref, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
 
 export default function AdminPage() {
   const [users, setUsers] = useState<any[]>([]);
@@ -42,11 +42,21 @@ export default function AdminPage() {
   const fetchProfilePictureUrl = async (userId: string) => {
     try {
       const storageRef = ref(storage, `profile-pictures/${userId}`);
-      const url = await getDownloadURL(storageRef);
-      setProfilePictureUrls((prev) => ({ ...prev, [userId]: url }));
+      
+      // Check if the file exists
+      const result = await listAll(ref(storage, "profile-pictures"));
+      const fileExists = result.items.some((item) => item.name === userId);
+
+      if (fileExists) {
+        const url = await getDownloadURL(storageRef);
+        setProfilePictureUrls((prev) => ({ ...prev, [userId]: url }));
+      } else {
+        // Use default placeholder if file doesn't exist
+        setProfilePictureUrls((prev) => ({ ...prev, [userId]: "/default-user.png" }));
+      }
     } catch (error) {
       console.error("Error fetching profile picture:", error);
-      setProfilePictureUrls((prev) => ({ ...prev, [userId]: "/default-user.png" })); // Default placeholder
+      setProfilePictureUrls((prev) => ({ ...prev, [userId]: "/default-user.png" }));
     }
   };
 
@@ -422,7 +432,6 @@ export default function AdminPage() {
     </div>
   );
 }
-
 
 
 

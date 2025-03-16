@@ -17,7 +17,9 @@ export default function Home() {
       try {
         const storageRef = ref(storage, "art/");
         const result = await listAll(storageRef);
-        const urls = await Promise.all(result.items.map((item) => getDownloadURL(item)));
+        const urls = await Promise.all(
+          result.items.map((item) => getDownloadURL(item))
+        );
         setArtworks(urls);
       } catch (error) {
         console.error("Error fetching artworks:", error);
@@ -27,7 +29,7 @@ export default function Home() {
 
     const interval = setInterval(() => {
       setCurrentArtIndex((prev) => (prev + 1) % artworks.length);
-    }, 5000);
+    }, 7000);
     return () => clearInterval(interval);
   }, [artworks.length]);
 
@@ -44,12 +46,12 @@ export default function Home() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center pt-8 sm:pt-12 lg:pt-16">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
-            Welcome to my simple Page
+            whatever
           </h1>
-          <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8 text-center max-w-2xl">
-            Here you can see some writings and art.
-          </p>
-
+          <h2 className="text-xl italic sm:text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8 text-center max-w-2xl">
+            ...the eye is not satisfied with seeing, <br /> nor the ear filled
+            with hearing. Ecclesiastes 1:8
+          </h2>
           {artworks.length > 0 ? (
             <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3 mb-8">
               <img
@@ -60,7 +62,9 @@ export default function Home() {
               />
             </div>
           ) : (
-            <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">No artworks available.</p>
+            <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
+              No artworks available.
+            </p>
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8">
@@ -77,26 +81,26 @@ export default function Home() {
               Sign Up
             </Link>
             <button
-    className="px-4 py-2 sm:px-6 sm:py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 dark:bg-purple-600 dark:hover:bg-purple-700 text-center w-full sm:w-auto"
-    onClick={handleCarouselClick}
->
-    View Art
-</button>
-
+              className="px-4 py-2 sm:px-6 sm:py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 dark:bg-purple-600 dark:hover:bg-purple-700 text-center w-full sm:w-auto"
+              onClick={handleCarouselClick}
+            >
+              View Art
+            </button>
           </div>
 
           <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 text-center sm:text-left max-w-2xl">
-            Let them have a look around, <br /> and find what they like. <br /> AND dislike, for that matter. <br /> Done serving people, I am. <br /> Done presenting myself suitable, <br /> to hell with that. <br /> I be what I be, hosts of many, <br /> and lord of hosts. <br /> - Talking to myself, at the start of daybreak. <br /> I did what I did for whatever reason.
+            Let them have a look around, <br /> and find what they like. <br />{" "}
+            AND dislike, for that matter. <br /> Done serving people, I am.{" "}
+            <br /> Done presenting myself suitable, <br /> to hell with that.{" "}
+            <br /> I be what I be, hosts of many, <br /> and lord of hosts.{" "}
+            <br /> - Talking to myself, at the start of daybreak. <br /> I did
+            what I did for whatever reason.
           </p>
         </div>
       </div>
     </div>
   );
 }
-
-
-
-
 
 /* "use client";
 
@@ -196,11 +200,6 @@ export default function Home() {
   );
 }
  */
-
-
-
-
-
 
 /* 
 "use client";
@@ -303,7 +302,6 @@ export default function Home() {
 }
  */
 
-
 /* 
 "use client";
 
@@ -395,25 +393,6 @@ export default function Home() {
 
  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* "use client";
 
 import Link from "next/link";
@@ -481,8 +460,6 @@ export default function Home() {
   );
 }
  */
-
-
 
 /*  "use client";
 
@@ -552,4 +529,3 @@ export default function Home() {
 
 
  */
- 

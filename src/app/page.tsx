@@ -43,12 +43,12 @@ export default function Home() {
           {/* Mini Carousel */}
           {artworks.length > 0 ? (
             <div className="w-full max-w-md mb-8">
-              <Link href="/art-show">
+              <Link href="/signin-form">
                 <img
                   src={artworks[currentArtIndex]}
                   alt={`Artwork ${currentArtIndex + 1}`}
                   className="w-full h-48 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-700"
-                  onError={(e) => e.target.style.display = 'none'}
+                  onError={(e) => (e.target as HTMLImageElement).style.display = 'none'}
                 />
               </Link>
             </div>

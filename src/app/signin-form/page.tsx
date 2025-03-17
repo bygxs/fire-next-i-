@@ -22,10 +22,10 @@ import { auth } from "../lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 
-export default function SignInPage() { // MODIFIED: Renamed to SignInPage
+export default function SignInPage() { // MODIFIED: Renamed to SignInPage {/*      //* ADDED: Suspense boundary */}
   return (
      <Suspense fallback={<div>Loading...</div>}> 
-     //* ADDED: Suspense boundary
+
       <SignInForm />
     </Suspense>
   );

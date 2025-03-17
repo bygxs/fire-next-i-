@@ -73,7 +73,7 @@ export default function Home() {
               href="/signin-form"
               className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
             >
-              Go to Sign-In
+               Sign-In
             </Link>
             <Link
               href="/signup-form"

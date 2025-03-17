@@ -129,7 +129,7 @@ export default function Dashboard() {
                 href="/admin/users"
                 className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 text-center sm:w-auto w-full"
               >
-                Go to Admin Panel
+               Admin Panel
               </Link>
               <Link
                 href="/admin/content-create"

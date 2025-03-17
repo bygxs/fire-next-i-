@@ -75,6 +75,15 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
             <FontAwesomeIcon icon={faUser} className="w-6 h-6" />
             <span className="text-xs mt-1">Profile</span>
           </Link>
+          <Link
+            href="/onboarding"
+            className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+            onClick={onLinkClick}
+          >
+             <FontAwesomeIcon icon={faUser} className="w-6 h-6" />
+            <span className="text-lg mt-1">Onboarding</span>{" "}
+          
+          </Link>
         </>
       )}
 
@@ -172,6 +181,8 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
     </>
   );
 }
+
+
  
   
   import Link from "next/link";

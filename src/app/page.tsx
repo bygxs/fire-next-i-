@@ -1,3 +1,4 @@
+//src/app/page.tsx
 "use client";
 
 import Link from "next/link";
@@ -46,7 +47,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center pt-8 sm:pt-12 lg:pt-16">
-        {/*   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
+          {/*   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
             whatever
           </h1> */}
           <h2 className="text-xl italic sm:text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8 text-center max-w-2xl">
@@ -73,7 +74,7 @@ export default function Home() {
               href="/signin-form"
               className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
             >
-               Sign-In
+              Sign-In
             </Link>
             <Link
               href="/signup-form"
@@ -89,18 +90,17 @@ export default function Home() {
               View Art
             </button>
 
- <Link
+            <Link
               href="/signsign"
               className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
             >
               Sign Up & In
             </Link>
-            
           </div>
-{/* 
+          {/* 
          <BlogGlimpse /> */}
 
-         {/*  <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 text-center sm:text-left max-w-2xl">
+          {/*  <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 text-center sm:text-left max-w-2xl">
             Let them have a look around, <br /> and find what they like. <br />{" "}
             AND dislike, for that matter. <br /> Done serving people, I am.{" "}
             <br /> Done presenting myself suitable, <br /> to hell with that.{" "}

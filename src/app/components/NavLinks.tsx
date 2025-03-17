@@ -1,4 +1,124 @@
 import Link from "next/link";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faHome,
+//   faBook,
+//   faTachometerAlt,
+//   faUser,
+//   faSignInAlt,
+//   faUserPlus,
+//   faUsersCog,
+// } from "@fortawesome/free-solid-svg-icons";
+
+interface NavLinksProps {
+  isSignedIn: boolean;
+  onLinkClick?: () => void; // Optional callback for closing the hamburger menu
+}
+
+export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
+  return (
+    <div className="flex items-center space-x-6">
+      {/* Admin Panel Link */}
+      {isSignedIn && (
+        <Link
+          href="/admin/users"
+          className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+          onClick={onLinkClick}
+        >
+          {/* <FontAwesomeIcon icon={faUsersCog} className="w-6 h-6" /> */}
+          <span className="text-lg mt-1">Admin</span>{" "}
+          {/* Increased text size */}
+        </Link>
+      )}
+
+      {/* Home Link */}
+      <Link
+        href="/"
+        className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+        onClick={onLinkClick}
+      >
+        {/* <FontAwesomeIcon icon={faHome} className="w-6 h-6" /> */}
+        <span className="text-lg mt-1">Home</span> {/* Increased text size */}
+      </Link>
+
+      {/* Content Link */}
+      <Link
+        href="/content-show"
+        className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+        onClick={onLinkClick}
+      >
+        {/* <FontAwesomeIcon icon={faBook} className="w-6 h-6" /> */}
+        <span className="text-lg mt-1">Content</span>{" "}
+        {/* Increased text size */}
+      </Link>
+
+      {/* Signed-In Links */}
+      {isSignedIn && (
+        <>
+          {/* Dashboard Link */}
+          <Link
+            href="/dashboard"
+            className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+            onClick={onLinkClick}
+          >
+            {/* <FontAwesomeIcon icon={faTachometerAlt} className="w-6 h-6" /> */}
+            <span className="text-lg mt-1">Dashboard</span>{" "}
+            {/* Increased text size */}
+          </Link>
+
+          {/* Profile Link */}
+          <Link
+            href="/profile"
+            className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+            onClick={onLinkClick}
+          >
+            {/* <FontAwesomeIcon icon={faUser} className="w-6 h-6" /> */}
+            <span className="text-lg mt-1">Profile</span>{" "}
+            {/* Increased text size */}
+          </Link>
+          <Link
+            href="/profile"
+            className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+            onClick={onLinkClick}
+          >
+            {/* <FontAwesomeIcon icon={faUser} className="w-6 h-6" /> */}
+            <span className="text-lg mt-1">Onboarding</span>{" "}
+            {/* Increased text size */}
+          </Link>
+        </>
+      )}
+
+      {/* Signed-Out Links */}
+      {!isSignedIn && (
+        <>
+          {/* Sign In Link */}
+          <Link
+            href="/signin-form"
+            className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+            onClick={onLinkClick}
+          >
+            {/* <FontAwesomeIcon icon={faSignInAlt} className="w-6 h-6" /> */}
+            <span className="text-lg mt-1">Sign In</span>{" "}
+            {/* Increased text size */}
+          </Link>
+
+          {/* Sign Up Link */}
+          <Link
+            href="/signup-form"
+            className="flex flex-col items-center text-gray-600 hover:text-gray-800 transition duration-300"
+            onClick={onLinkClick}
+          >
+            {/* <FontAwesomeIcon icon={faUserPlus} className="w-6 h-6" /> */}
+            <span className="text-lg mt-1">Sign Up</span>{" "}
+            {/* Increased text size */}
+          </Link>
+        </>
+      )}
+    </div>
+  );
+}
+
+/* import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -18,7 +138,7 @@ interface NavLinksProps {
 export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
   return (
     <div className="flex items-center space-x-6">
-      {/* Admin Panel Link */}
+      // {/* Admin Panel Link 
       {isSignedIn && (
         <Link
           href="/admin/users"
@@ -30,7 +150,7 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
         </Link>
       )}
 
-      {/* Home Link */}
+      // {/* Home Link 
       <Link
         href="/"
         className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition duration-300"
@@ -40,7 +160,7 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
         <span className="text-xs mt-1">Home</span>
       </Link>
 
-      {/* Content Link */}
+      // {/* Content Link 
       <Link
         href="/content-show"
         className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition duration-300"
@@ -50,10 +170,10 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
         <span className="text-xs mt-1">Content</span>
       </Link>
 
-      {/* Signed-In Links */}
+      // {/* Signed-In Links 
       {isSignedIn && (
         <>
-          {/* Dashboard Link */}
+          // {/* Dashboard Link
           <Link
             href="/dashboard"
             className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition duration-300"
@@ -63,7 +183,7 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
             <span className="text-xs mt-1">Dashboard</span>
           </Link>
 
-          {/* Profile Link */}
+          // {/* Profile Link 
           <Link
             href="/profile"
             className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition duration-300"
@@ -75,10 +195,10 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
         </>
       )}
 
-      {/* Signed-Out Links */}
+      // {/* Signed-Out Links 
       {!isSignedIn && (
         <>
-          {/* Sign In Link */}
+          // {/* Sign In Link 
           <Link
             href="/signin-form"
             className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition duration-300"
@@ -88,7 +208,7 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
             <span className="text-xs mt-1">Sign In</span>
           </Link>
 
-          {/* Sign Up Link */}
+          // {/* Sign Up Link 
           <Link
             href="/signup-form"
             className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition duration-300"
@@ -101,11 +221,7 @@ export default function NavLinks({ isSignedIn, onLinkClick }: NavLinksProps) {
       )}
     </div>
   );
-}
-
-
-
-
+} */
 
 /* // src/app/components/NavLinks.tsx
 import Link from "next/link";

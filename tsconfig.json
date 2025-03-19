@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext", "webworker"], // Add "webworker" for service workers
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "webworker"
+    ], // Add "webworker" for service workers
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,18 +24,24 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "outDir": "./public", // Output compiled files to the public directory
-    "rootDir": "./src" // Root directory for TypeScript files
+    "rootDir": "./" // Root directory for TypeScript files
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
+    "next-env.d.ts",
+    //".next/types/**/*.ts",
     "src/app/components/GoogleAnalytics.tsx",
     "src/firebase-messaging-sw.ts" // Include the service worker TypeScript file
+    ,
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

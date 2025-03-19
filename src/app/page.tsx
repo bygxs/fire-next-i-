@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { storage, auth, generateToken } from "./lib/firebase";
+import { storage, auth } from "./lib/firebase"; //import { storage, auth, generateToken } from "./lib/firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";

@@ -44,11 +44,18 @@ const ensureFirebaseInitialized = () => {
 // Initialize Firebase services
 const getFirebaseServices = () => {
   ensureFirebaseInitialized();
+  
+  // Ensure firebaseApp is defined
+  if (!firebaseApp) {
+    throw new Error("Firebase app is not initialized");
+  }
+
   const auth = getAuth(firebaseApp);
   const db = getFirestore(firebaseApp);
   const storage = getStorage(firebaseApp);
   return { auth, db, storage };
 };
+
 
 // Get FCM token
 export const getFCMToken = async () => {

@@ -66,7 +66,7 @@ export default function Home() {
             </div>
           ) : (
             <p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
-              No artworks available.
+              chill,downloading artworks....
             </p>
           )}
 

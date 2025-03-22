@@ -1,4 +1,4 @@
-/// <reference lib="webworker" />
+/* // this maybe good for chache but it unon /// <reference lib="webworker" />
 const CACHE_NAME = 'your-app-cache-v1';
 const urlsToCache = [
     '/',
@@ -24,3 +24,4 @@ self.addEventListener('activate', (event) => {
     }));
 });
 export {};
+ */

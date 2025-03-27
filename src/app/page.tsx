@@ -72,10 +72,16 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8">
             <Link
+              href="/sign-fullstack"
+              className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
+            >
+              Sign  Fullstack
+            </Link>
+            <Link
               href="/signin-form"
               className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
             >
-              Sign-In
+              Sign In / Sign Up
             </Link>
             <Link
               href="/signup-form"

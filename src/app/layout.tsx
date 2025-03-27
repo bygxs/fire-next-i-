@@ -63,17 +63,16 @@ export default function RootLayout({
             <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
 
             <Toaster />
-          
           </div>
         </ThemeProvider>
         <ServiceWorkerRegistration />
-           {/* Add this at the end of your body */}
-           <Notification />
+        {/* Add this at the end of your body */}
+        <Notification />
 
-{/* Add this wherever you want the permission button to appear */}
-<div className="fixed bottom-4 right-4">
-  <NotificationPermissionButton />
-</div>
+        {/* Add this wherever you want the permission button to appear */}
+        <div className="fixed bottom-4 right-4">
+          <NotificationPermissionButton />
+        </div>
       </body>
     </html>
   );

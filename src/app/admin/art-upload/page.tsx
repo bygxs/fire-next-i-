@@ -120,9 +120,9 @@ export default function AdminArtUploadPage() {
           View Art
         </Link>
       </div>
-      <div className="mt-8 w-full max-w-md">
+      <div className="mt-8 w-full max-w-4xl">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">All Artworks</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {artworks.map((art) => (
             <div key={art.id} className="relative">
               <img
@@ -142,4 +142,5 @@ export default function AdminArtUploadPage() {
       </div>
     </div>
   );
+  
 }

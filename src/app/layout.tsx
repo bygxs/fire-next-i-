@@ -10,6 +10,8 @@ import { Toaster } from "react-hot-toast";
 import ThemeToggle from "./components/ThemeToggle";
 import ThemeProvider from "./components/ThemeProvider";
 import ClientLayoutWrapper from "./components/ClientLayoutWrapper";
+import { NotificationPermissionButton } from "./components/Notification";
+import { Notification } from "./components/Notification";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,12 +63,16 @@ export default function RootLayout({
             <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
 
             <Toaster />
-            {/*       <footer className=" text-center py-4 text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800">
-              Version: {packageJson.version}
-            </footer> */}
           </div>
         </ThemeProvider>
         <ServiceWorkerRegistration />
+        {/* Add this at the end of your body */}
+        <Notification />
+
+        {/* Add this wherever you want the permission button to appear */}
+        <div className="fixed bottom-4 right-4">
+          <NotificationPermissionButton />
+        </div>
       </body>
     </html>
   );

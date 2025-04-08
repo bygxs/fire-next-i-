@@ -1,16 +1,70 @@
-// src/app/dashboard/page.tsx
-"use client";
+"use client"; // Client-side directive for Next.js
+
+/**
+ * Dashboard page for authenticated users.
+ * Displays profile info with text wrapping around a circular picture, admin controls,
+ * and navigation links. Responsive for desktop, tablet, and mobile.
+ */
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "../lib/firebase";
+import { auth, db } from "../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../lib/firebase";
 import Link from "next/link";
+
+interface Profile {
+  name: string;
+  bio: string;
+  location?: string;
+  dob?: string;
+  interests?: string[];
+  profilePictureUrl?: string;
+  socialLinks?: {
+    linkedin?: string;
+    twitter?: string;
+    facebook?: string;
+  };
+  role?: string;
+}
+
+// SocialLinks Component
+const SocialLinks = ({ links }: { links?: Profile["socialLinks"] }) => (
+  <div className="mt-6 space-y-2">
+    <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200">
+      Social Links
+    </h3>
+    <div className="flex gap-4">
+      {links?.linkedin && (
+        <a
+          href={links.linkedin}
+          className="text-blue-600 hover:text-blue-800 dark:text-blue-400"
+        >
+          LinkedIn
+        </a>
+      )}
+      {links?.twitter && (
+        <a
+          href={links.twitter}
+          className="text-sky-500 hover:text-sky-700 dark:text-sky-400"
+        >
+          Twitter
+        </a>
+      )}
+      {links?.facebook && (
+        <a
+          href={links.facebook}
+          className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400"
+        >
+          Facebook
+        </a>
+      )}
+    </div>
+  </div>
+);
 
 export default function Dashboard() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
@@ -18,18 +72,15 @@ export default function Dashboard() {
     const fetchProfile = async () => {
       const user = auth.currentUser;
       if (!user) {
-        router.push("/"); // Redirect to home page if user is not authenticated
+        router.push("/");
         return;
       }
 
       setUserEmail(user.email);
-
-      // Fetch profile data from Firestore
       try {
         const profileDoc = await getDoc(doc(db, "users", user.uid));
         if (profileDoc.exists()) {
-          setProfile(profileDoc.data()); // Keep the full profile
-          console.log(profileDoc.data().role); // Check role here
+          setProfile(profileDoc.data() as Profile);
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -39,15 +90,10 @@ export default function Dashboard() {
     };
 
     fetchProfile();
-
-    // Listen for authentication state changes
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        router.push("/"); // Redirect to home page if user signs out
-      }
+      if (!user) router.push("/");
     });
-
-    return () => unsubscribe(); // Cleanup subscription
+    return () => unsubscribe();
   }, [router]);
 
   if (isLoading) {
@@ -59,110 +105,102 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center pt-20">
-        <h3 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-          Welcome to the Dashboard, {userEmail || "User"}!
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto pt-6 sm:pt-8 lg:pt-10">
+        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
+          Welcome to the Dashboard,{" "}
+          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            {profile?.name}
+          </span>
         </h3>
+        <h4 className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 text-center">
+          <span className="font-semibold italic">{userEmail || "User"}</span> is
+          used to log in.
+        </h4>
 
-        {/* check Firestore’s content collection. */}
-        <div>
-          {profile?.role === "admin" && (
-            <Link
-              href="/admin/content-create"
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Manage Content
-            </Link>
-          )}
+        {/* Admin Section */}
+        {profile?.role === "admin" && (
+          <div className="mb-6 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+            <p className="text-green-500 text-center text-lg sm:text-xl font-medium mb-6">
+              You’re an admin! Secret powers unlocked.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/admin/users"
+                className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 text-center sm:w-auto w-full"
+              >
+               Admin Panel
+              </Link>
+              <Link
+                href="/admin/content-create"
+                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 text-center sm:w-auto w-full"
+              >
+                Manage Content
+              </Link>
+              <Link
+                href="/admin/art-upload"
+                className="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-all duration-300 text-center sm:w-auto w-full"
+              >
+                Upload Art
+              </Link>
+            </div>
+          </div>
+        )}
 
-          {profile?.role === "admin" && (
-            <Link
-              href="/admin/art-upload"
-              className="m-2 inline-block px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
-            >
-              Upload Art
-            </Link>
-          )}
+        {/* Navigation Links */}
+        <div className="mb-6 flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/art-show"
-            className="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-puple-700 transition-colors mt-2"
+            className="px-6 py-3 bg-purple-600 text-white rounded hover:bg-purple-700 text-center"
           >
             View Art
           </Link>
           <Link
             href="/profile"
-            className="m-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
+            className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 text-center"
           >
             Edit Profile
           </Link>
         </div>
 
-        {/* you’ll see the message if you’re admin. Non-admins won’t. */}
-
-        {profile?.role === "admin" && (
-          <div className="jusfty-center items-center mt-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg">
-            <p className="text-green-500 ml-11">
-              You’re an admin! Secret powers unlocked.
-            </p>
-            <Link
-              href="/admin/users"
-              className=" ml-64 mt-2 inline-block px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600"
-            >
-              Go to Admin Panel
-            </Link>
-          </div>
-        )}
-
+        {/* Profile Section */}
         {profile ? (
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-lg mt-6">
-            {profile.profilePictureUrl && (
-              <div className="flex justify-center mb-4">
+          <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md">
+            <div className="relative overflow-hidden ">
+              {profile.profilePictureUrl && (
                 <img
                   src={profile.profilePictureUrl}
                   alt="Profile Picture"
-                  className="w-24 h-24 rounded-full object-cover"
+                  className="w-32 h-32 sm:w-48 sm:h-48 rounded-full object-cover float-left mr-6 mb-4"
+                  style={{
+                    shapeOutside: "circle()", // Ensures text wraps around the circle
+                    marginLeft: "0.5rem", // Adjusts for circular shape
+                  }}
                 />
+              )}
+              <div className="space-y-3">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-200">
+                  {profile.name}
+                </h2>
+                <div className="prose dark:prose-invert">
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {profile.bio || "No bio provided"}
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                    <ProfileField label="Location" value={profile.location} />
+                    <ProfileField label="Date of Birth" value={profile.dob} />
+                    <ProfileField
+                      label="Interests"
+                      value={profile.interests?.join(", ")}
+                    />
+                  </div>
+                  <SocialLinks links={profile.socialLinks} />
+                </div>
               </div>
-            )}
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-              Your Profile
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              <strong>Name:</strong> {profile.name}
-            </p>
-            <p className="text-gray-600 dark:text-gray-400">
-              <strong>Bio:</strong> {profile.bio}
-            </p>
-            <p className="text-gray-600 dark:text-gray-400">
-              <strong>Location:</strong> {profile.location}
-            </p>
-            <p className="text-gray-600 dark:text-gray-400">
-              <strong>Date of Birth:</strong> {profile.dob}
-            </p>
-            <p className="text-gray-600 dark:text-gray-400">
-              <strong>Interests:</strong> {profile.interests.join(", ")}
-            </p>
-            <div className="mt-4">
-              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-2">
-                Social Links
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                <strong>LinkedIn:</strong>{" "}
-                {profile.socialLinks.linkedin || "Not provided"}
-              </p>
-              <p className="text-gray-600 dark:text-gray-400">
-                <strong>Twitter:</strong>{" "}
-                {profile.socialLinks.twitter || "Not provided"}
-              </p>
-              <p className="text-gray-600 dark:text-gray-400">
-                <strong>Facebook:</strong>{" "}
-                {profile.socialLinks.facebook || "Not provided"}
-              </p>
             </div>
           </div>
         ) : (
-          <p className="text-gray-600 dark:text-gray-400 mt-6">
+          <p className="text-gray-600 dark:text-gray-400 text-center">
             No profile data found. Please complete your profile.
           </p>
         )}
@@ -170,3 +208,15 @@ export default function Dashboard() {
     </div>
   );
 }
+
+// Helper components
+const ProfileField = ({ label, value }: { label: string; value?: string }) => (
+  <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+    <strong className="block text-sm font-medium text-gray-600 dark:text-gray-300">
+      {label}:
+    </strong>
+    <span className="text-gray-800 dark:text-gray-200">
+      {value || "Not provided"}
+    </span>
+  </div>
+);

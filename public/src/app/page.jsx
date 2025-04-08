@@ -32,7 +32,7 @@ export default function Home() {
             router.push("/art-show");
         }
         else {
-            router.push("/signin-form?redirect=/art-show");
+            router.push("/sign-fullstack?redirect=/art-show");
         }
     };
     return (<div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
@@ -46,31 +46,55 @@ export default function Home() {
             ...the eye is not satisfied with seeing, <br /> nor the ear filled
             with hearing. Ecclesiastes 1:8
           </h2>
-          {artworks.length > 0 ? (<div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3 mb-8">
-              <img src={artworks[currentArtIndex]} alt={`Artwork ${currentArtIndex + 1}`} className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-700 cursor-pointer" onClick={handleCarouselClick}/>
-            </div>) : (<p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
-              No artworks available.
+          {artworks.length > 0 ? (<div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 mb-8">
+            <img src={artworks[currentArtIndex]} alt={`Artwork ${currentArtIndex + 1}`} className="w-full h-64 sm:h-80 md:h-96 lg:h-[32rem] object-cover rounded-lg border-2 border-gray-300 dark:border-gray-700 cursor-pointer" onClick={handleCarouselClick}/>
+          </div>
+        /*    <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3 mb-8">
+             <img
+               src={artworks[currentArtIndex]}
+               alt={`Artwork ${currentArtIndex + 1}`}
+               className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-700 cursor-pointer"
+               onClick={handleCarouselClick}
+             />
+           </div> */
+        ) : (<p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
+              chill,downloading artworks....
             </p>)}
 
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8">
-            <Link href="/signin-form" className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto">
-              Sign-In
-            </Link>
-            <Link href="/signup-form" className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto">
-              Sign Up
+            <Link href="/sign-fullstack" className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto">
+              Sign In / Sign Up
             </Link>
 
             <button className="px-4 py-2 sm:px-6 sm:py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 dark:bg-purple-600 dark:hover:bg-purple-700 text-center w-full sm:w-auto" onClick={handleCarouselClick}>
               View Art
             </button>
+            {/*
+        <Link
+          href="/test-notifications"
+          className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
+        >
+          Test Notification
+        </Link>
 
-            <Link href="/test-notifications" className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto">
-              Test Notification
-            </Link>
-
-            <Link href="/signsign" className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto">
-              Sign Up & In
-            </Link>
+        <Link
+          href="/signsign"
+          className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
+        >
+          Sign Up & In
+        </Link>
+        <Link
+          href="/signin-form"
+          className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
+        >
+          Sign In / Sign Up
+        </Link>
+        <Link
+          href="/signup-form"
+          className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 text-center w-full sm:w-auto"
+        >
+          Sign Up
+        </Link> */}
           </div>
         </div>
       </div>

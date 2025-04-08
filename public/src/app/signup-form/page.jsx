@@ -1,16 +1,3 @@
-/* "use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-
-export default function SignUpRedirect() {
-  const router = useRouter();
-  useEffect(() => {
-    router.replace("/signInSignUp?mode=signup");
-  }, [router]);
-  return null;
-}
- */
-//// src/app/signup-form/page.tsx
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

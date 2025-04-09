@@ -1,8 +1,8 @@
-// src/app/signsignsign/page.tsx
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-export default function SignInSignUpPage() {
+import { Suspense } from "react";
+function SignInSignUpForm() {
     const [mode, setMode] = useState("signIn");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,10 +13,9 @@ export default function SignInSignUpPage() {
         e.preventDefault();
         setError(null);
         setSuccess(null);
-        // Simulate sign-in logic
         if (email === "user@example.com" && password === "password") {
             setSuccess("Sign-in successful! Redirecting...");
-            setTimeout(() => router.push("/dashboard"), 2000); // Redirect after 2 seconds
+            setTimeout(() => router.push("/dashboard"), 2000);
         }
         else {
             setError("Invalid email or password.");
@@ -26,19 +25,17 @@ export default function SignInSignUpPage() {
         e.preventDefault();
         setError(null);
         setSuccess(null);
-        // Simulate sign-up logic
         if (!email || !password) {
             setError("Email and password are required.");
             return;
         }
         setSuccess("Sign-up successful! Redirecting...");
-        setTimeout(() => router.push("/onboarding"), 2000); // Redirect after 2 seconds
+        setTimeout(() => router.push("/onboarding"), 2000);
     };
     const handleForgotPassword = async (e) => {
         e.preventDefault();
         setError(null);
         setSuccess(null);
-        // Simulate forgot password logic
         if (!email) {
             setError("Please enter your email address.");
             return;
@@ -127,4 +124,9 @@ export default function SignInSignUpPage() {
           </form>)}
       </div>
     </div>);
+}
+export default function Page() {
+    return (<Suspense fallback={<div>Loading...</div>}>
+      <SignInSignUpForm />
+    </Suspense>);
 }

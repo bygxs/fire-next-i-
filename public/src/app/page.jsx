@@ -16,6 +16,7 @@ export default function Home() {
                 const result = await listAll(storageRef);
                 const urls = await Promise.all(result.items.map((item) => getDownloadURL(item)));
                 setArtworks(urls);
+                setCurrentArtIndex(Math.floor(Math.random() * urls.length)); // Random start
             }
             catch (error) {
                 console.error("Error fetching artworks:", error);
@@ -37,27 +38,18 @@ export default function Home() {
     };
     return (<div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col items-center justify-center pt-8 sm:pt-12 lg:pt-16">
+      <div className="flex flex-col items-center justify-between pt-8 sm:pt-12 lg:pt-16 h-full">
           {/*   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">
           whatever
         </h1> */}
 
-          <h2 className="text-xl italic sm:text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8 text-center max-w-2xl">
+          <h2 className="text-l italic sm:text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8 text-center max-w-2xl">
             ...the eye is not satisfied with seeing, <br /> nor the ear filled
             with hearing. Ecclesiastes 1:8
           </h2>
           {artworks.length > 0 ? (<div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 mb-8">
-            <img src={artworks[currentArtIndex]} alt={`Artwork ${currentArtIndex + 1}`} className="w-full h-64 sm:h-80 md:h-96 lg:h-[32rem] object-cover rounded-lg border-2 border-gray-300 dark:border-gray-700 cursor-pointer" onClick={handleCarouselClick}/>
-          </div>
-        /*    <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3 mb-8">
-             <img
-               src={artworks[currentArtIndex]}
-               alt={`Artwork ${currentArtIndex + 1}`}
-               className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-700 cursor-pointer"
-               onClick={handleCarouselClick}
-             />
-           </div> */
-        ) : (<p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
+              <img src={artworks[currentArtIndex]} alt={`Artwork ${currentArtIndex + 1}`} className="w-full h-86 sm:h-80 md:h-96 lg:h-[32rem] object-cover rounded-lg border-2 border-gray-300 dark:border-gray-700 cursor-pointer" onClick={handleCarouselClick}/>
+            </div>) : (<p className="text-gray-600 dark:text-gray-400 mb-8 text-center">
               chill,downloading artworks....
             </p>)}
 

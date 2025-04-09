@@ -4,7 +4,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { auth } from "../lib/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, } from "firebase/auth";
 import Link from "next/link";
-export default function AuthForm() {
+import { Suspense } from "react";
+// Inner component with useSearchParams
+function SignInForm() {
     const [isSignUp, setIsSignUp] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,17 +22,13 @@ export default function AuthForm() {
         setLoading(true);
         try {
             if (isSignUp) {
-                // Sign up logic
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 console.log("User created:", user.uid);
                 setSuccess("Account created successfully! Redirecting...");
-                setTimeout(() => {
-                    router.push("/onboarding");
-                }, 2000);
+                setTimeout(() => router.push("/onboarding"), 2000);
             }
             else {
-                // Sign in logic
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 console.log("Signed in:", user.uid);
@@ -43,7 +41,6 @@ export default function AuthForm() {
         }
         catch (error) {
             console.error("Authentication error:", error);
-            // Handle errors for both sign up and sign in
             switch (error.code) {
                 case "auth/email-already-in-use":
                     setError("User with this email already exists.");
@@ -136,4 +133,10 @@ export default function AuthForm() {
         </div>
       </form>
     </div>);
+}
+// Wrap in Suspense for the page export
+export default function Page() {
+    return (<Suspense fallback={<div>Loading...</div>}>
+      <SignInForm />
+    </Suspense>);
 }

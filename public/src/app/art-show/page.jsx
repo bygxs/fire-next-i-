@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackward, faForward, faHome, faImages, faTh, } from "@fortawesome/free-solid-svg-icons";
+import { faBackward, faForward, faHome, faImages, faTh } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 export default function ArtShowPage() {
     const [artworks, setArtworks] = useState([]);
@@ -25,6 +25,7 @@ export default function ArtShowPage() {
                 })));
                 const shuffledUrls = shuffleArray(urls);
                 setArtworks(shuffledUrls);
+                setCurrentArtworkIndex(Math.floor(Math.random() * shuffledUrls.length)); // Random start
             }
             catch (error) {
                 console.error("Error fetching images from Firebase Storage:", error);
@@ -49,12 +50,9 @@ export default function ArtShowPage() {
         setCurrentArtworkIndex((prevIndex) => (prevIndex - 1 + artworks.length) % artworks.length);
     };
     if (loading) {
-        return (<div className="min-h-screen flex justify-center items-center bg-white">
-        Loading...
-      </div>);
+        return <div className="min-h-screen flex justify-center items-center bg-white">Loading...</div>;
     }
     return (<div className="min-h-screen flex flex-col items-center justify-center relative">
-      {/* Home and Toggle Buttons */}
       <div className="fixed top-4 left-4 right-4 flex justify-between z-20">
         <button onClick={() => setIsGridView(!isGridView)} className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 opacity-50 hover:opacity-100 transition-opacity" title={isGridView ? "Back to Carousel" : "View All in Grid"}>
           <FontAwesomeIcon icon={isGridView ? faImages : faTh}/>

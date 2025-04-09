@@ -1,33 +1,29 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { auth } from "../lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-export default function SignUpForm() {
+import { Suspense } from "react";
+function SignUpForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(null); // For error messages
-    const [success, setSuccess] = useState(null); // For success messages
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
     const router = useRouter();
+    const searchParams = useSearchParams(); // Added per your request
     const handleSignUp = async (e) => {
         e.preventDefault();
-        setError(null); // Reset error
-        setSuccess(null); // Reset success message
+        setError(null);
+        setSuccess(null);
         try {
-            // Create user with Firebase Auth
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log("User created:", user.uid);
-            // Show success message
             setSuccess("User created successfully! Redirecting...");
-            // Redirect to Profile after a short delay
-            setTimeout(() => {
-                router.push("/onboarding");
-            }, 2000); // 2 seconds delay
+            setTimeout(() => router.push("/onboarding"), 2000);
         }
         catch (error) {
             console.error("Sign-up error:", error);
-            // Handle specific Firebase errors
             switch (error.code) {
                 case "auth/email-already-in-use":
                     setError("User with this email already exists.");
@@ -49,12 +45,10 @@ export default function SignUpForm() {
           Sign Up
         </h2>
 
-       
         {success && (<div className="mb-4 p-4 bg-green-100 text-green-800 rounded-lg dark:bg-green-800 dark:text-green-100">
             {success}
           </div>)}
 
-    
         {error && (<div className="mb-4 p-4 bg-red-100 text-red-800 rounded-lg dark:bg-red-800 dark:text-red-100">
             {error}
           </div>)}
@@ -76,4 +70,9 @@ export default function SignUpForm() {
         </button>
       </form>
     </div>);
+}
+export default function Page() {
+    return (<Suspense fallback={<div>Loading...</div>}>
+      <SignUpForm />
+    </Suspense>);
 }
